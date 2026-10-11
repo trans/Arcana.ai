@@ -7,6 +7,11 @@
 - Each release: bump `shard.yml` and the `VERSION` constant, run the specs,
   commit as `Bump to X.Y.Z — summary` (body says what and why), tag
   `vX.Y.Z`, push `main` and the tag, then `gh release create`.
+- Check the bump took: `git show vX.Y.Z:shard.yml` must say X.Y.Z. arcana-core
+  v0.17.0 went out with 0.16.1 metadata because the bump searched for
+  0.16.0 after another session had released 0.16.1; 0.17.1 fixed it
+  without moving the tag. Match on the current version, not the one you
+  remember.
 - arcana also needs `pkg/PKGBUILD` (`pkgver`) and a new
   `pkg/debian/changelog` entry, plus `shards update <dep>` for a
   dependency bump.

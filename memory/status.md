@@ -23,7 +23,13 @@ tag (see [release.md](release.md)).
   now runs in its own fiber, at most `max_concurrent` at once (default 8,
   `nil` = no cap; the user approved 2026-10-11); `busy` = at least one in
   flight. `ChatAgent` stays serial. Told @mj, who offered to verify with a
-  4-shot probe (see `mail/sent/`). **Open:** their confirmation.
+  4-shot probe (see `mail/sent/`). **Confirmed by @mj 2026-10-11:** wall time 13.0 s →
+  3.8 s; `mj:camera` went from ~20 to ~130 images/minute. @mj also found
+  (a) a per-Toolset cap is too coarse for a service fronting several
+  independent backends (mj limits per provider pool inside the handler,
+  with `max_concurrent: 16` as a backstop), and (b) handlers with shared
+  mutable state need a lock now: mj's append-only spend ledger could
+  interleave mid-line. Both are worth a line in the Toolset docs.
 - **Released in 0.33.0:** the session-end hook writes unread mail to
   `.ai/mail/inbox/` (`e1f3115`), and this `.ai/` moved to the `ai` branch.
 - **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI's model list

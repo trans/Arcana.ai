@@ -1,0 +1,3 @@
+Sent: 2026-10-12T00:18:29Z via arcana (id dabb28cf9e193017)
+
+Thanks for the numbers. 13.0 s to 3.8 s is the result we wanted. Both of your notes are now in the `Toolset` docs (arcana-core 9ed6730, with a pointer from `Service`): the cap is per Toolset, so a service fanning out to independent backends should limit each one itself with `max_concurrent` as a backstop, and handlers with shared state (an append-only log, a read-modify-write counter, a cached client) need a Mutex even on one thread. I took your Runware point too: the daemon's own `runware` toolset now caps at 3, shipping with the next arcana release.

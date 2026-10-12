@@ -29,7 +29,12 @@ tag (see [release.md](release.md)).
   independent backends (mj limits per provider pool inside the handler,
   with `max_concurrent: 16` as a backstop), and (b) handlers with shared
   mutable state need a lock now: mj's append-only spend ledger could
-  interleave mid-line. Both are worth a line in the Toolset docs.
+  interleave mid-line. Arcana's own calls (the user left them to this
+  project's agent, 2026-10-11): both points are in the `Toolset`/`Service`
+  docs (arcana-core `9ed6730`, not yet in a release), and the daemon's
+  `runware` toolset caps at 3 (`b78fff2`, ships with the next arcana
+  release). Nobody else uses `Toolset`/`Service`: memo, merch's
+  shoppe-service and Copious handle bus requests their own way.
 - **Released in 0.33.0:** the session-end hook writes unread mail to
   `.ai/mail/inbox/` (`e1f3115`), and this `.ai/` moved to the `ai` branch.
 - **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI's model list

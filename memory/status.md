@@ -2,7 +2,7 @@
 
 *Updated 2026-10-11*
 
-Released: arcana 0.33.0 (`0d7b900`), arcana-core 0.17.1 (`443b63b`), arcana-ai 0.4.0.
+Released: arcana 0.34.0 (`cf892fa`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.4.0.
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -29,12 +29,14 @@ tag (see [release.md](release.md)).
   independent backends (mj limits per provider pool inside the handler,
   with `max_concurrent: 16` as a backstop), and (b) handlers with shared
   mutable state need a lock now: mj's append-only spend ledger could
-  interleave mid-line. Arcana's own calls (the user left them to this
-  project's agent, 2026-10-11): both points are in the `Toolset`/`Service`
-  docs (arcana-core `9ed6730`, not yet in a release), and the daemon's
-  `runware` toolset caps at 3 (`b78fff2`, ships with the next arcana
-  release). Nobody else uses `Toolset`/`Service`: memo, merch's
-  shoppe-service and Copious handle bus requests their own way.
+  interleave mid-line. **Answered in arcana-core 0.18.0** (the user
+  approved, 2026-10-11): lanes (a cap per backend; a request waits for its
+  lane before taking a toolset slot) and `ctx.exclusive(:key) { }` (one
+  block at a time per key, the rest of the handler concurrent); the README
+  has a "Writing a service" section. arcana 0.34.0 depends on it and caps
+  the daemon's `runware` toolset at 3. Told @mj (see `mail/sent/`); their
+  switch is their call. Nobody else uses `Toolset`/`Service`: memo,
+  merch's shoppe-service and Copious handle bus requests their own way.
 - **Released in 0.33.0:** the session-end hook writes unread mail to
   `.ai/mail/inbox/` (`e1f3115`), and this `.ai/` moved to the `ai` branch.
 - **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI's model list

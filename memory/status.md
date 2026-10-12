@@ -1,6 +1,6 @@
 # Status
 
-*Updated 2026-10-11*
+*Updated 2026-10-12*
 
 Released: arcana 0.34.0 (`cf892fa`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.4.0.
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -34,8 +34,12 @@ tag (see [release.md](release.md)).
   lane before taking a toolset slot) and `ctx.exclusive(:key) { }` (one
   block at a time per key, the rest of the handler concurrent); the README
   has a "Writing a service" section. arcana 0.34.0 depends on it and caps
-  the daemon's `runware` toolset at 3. Told @mj (see `mail/sent/`); their
-  switch is their call. Nobody else uses `Toolset`/`Service`: memo,
+  the daemon's `runware` toolset at 3 (installed 2026-10-12). Told @mj
+  (see `mail/sent/`). **@mj adopted lanes (2026-10-12)** and verified them:
+  two requests for a free backend cleared in ~3.5 s behind eight queued
+  for a capped one. They kept their ledger's own Mutex instead of
+  `ctx.exclusive`, rightly: the mj CLI writes it too. The docs now say
+  `exclusive` is for state the service owns (arcana-core `a6906a3`). Nobody else uses `Toolset`/`Service`: memo,
   merch's shoppe-service and Copious handle bus requests their own way.
 - **Released in 0.33.0:** the session-end hook writes unread mail to
   `.ai/mail/inbox/` (`e1f3115`), and this `.ai/` moved to the `ai` branch.

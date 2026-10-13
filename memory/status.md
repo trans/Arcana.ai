@@ -75,35 +75,41 @@ tag (see [release.md](release.md)).
       in its next commit). It needn't hold up the removals.
     - goldfish (library) and likely (bus chat replies) have no agent on
       the bus: the user to decide how they're moved.
-  - **Assessed 2026-10-13, not started:** pricing for images and TTS
-    (official sources, checked that day).
-    - Runware images: already exact; Runware reports the USD deducted
-      (`includeCost`).
-    - OpenAI images: exact from the response's `usage` (text/image input
-      tokens, output tokens) times list rates. gpt-image-1 shuts down
-      **2026-10-23** (arcana-ai's default; @overlore told, and is
-      unaffected: it draws through mj:camera unless its opt-in OpenAI
-      backend is chosen, which the user will settle); gpt-image-1.5,
-      -1-mini and chatgpt-image-latest on 2026-12-01; gpt-image-2 and
-      gpt-image-2.5-sunburst/-flare are current ($5 text in, $8 image in,
-      $30 image out per M). `Image::Result#cost` is a Float64 today
-      (Runware's), so the Cost shape needs a deprecation.
-    - OpenAI speech: every `/v1/audio/speech` model (tts-1, tts-1-hd,
-      gpt-4o-mini-tts) shuts down **2027-01-06**; OpenAI points to a
-      Realtime API model, which arcana-ai has no client for. tts-1/-hd
-      bill per character (counting rule undocumented); gpt-4o-mini-tts
-      reports usage only with `stream_format: "sse"`.
-    - ElevenLabs: the `character-cost` header gives billed characters,
-      but dollars per character depend on the account (plan rates, voice
-      multipliers, promos), so USD needs the account's rate. Sound-effect
-      billing rules in the docs don't agree with each other.
-  - **Asked by @overlore (2026-10-13):** price speech and OpenAI images in
-    arcana-ai's table, so Overlore and mj drop their own (the user wants
-    prices in one place). Overlore's speech figure is an estimate from
-    text length; its OpenAI images are logged at $0. Not yet answered.
-  - **Open:** TTS pricing, to add with @mj (which prices TTS today).
-    gpt-4o-mini-tts bills tokens ($0.60/M text in, $12/M audio out), and
-    OpenAI reports usage only in the speech endpoint's SSE stream.
+  - **Released in arcana-ai 0.5.2 (`8e8399d`, 2026-10-13): image and
+    speech pricing**, asked for by @overlore so apps drop their own rates
+    (the user wants prices in one place). Answered @overlore and told @mj
+    (see `mail/sent/`).
+    - `Usage` gained `image_input`, `image_output`, `audio_output`; the
+      table has gpt-image-2, gpt-image-2.5-sunburst/-flare ($5 text in,
+      $8 image in, $30 image out per M) and gpt-4o-mini-tts ($0.60 in,
+      $12 audio out). The older GPT Image models (1, 1-mini, 1.5,
+      chatgpt-image-latest) are left out on purpose: they have cached
+      rates their usage never reports, so they're Unpriced. Cached rates
+      never apply to 2/2.5 through the Images API (OpenAI's guide).
+    - Runware's reported USD is a `Pricing::Cost` (`Cost.reported`, as
+      `reported_cost`). `Image::Result#cost` as Float64, and building one
+      with a Float64, are deprecated; `cost(at)` returns Cost | Unpriced,
+      and plain `cost` will in 0.6.0. Overlore builds with two warnings
+      pointing at its two uses; mj, soaip and Onboard build clean.
+    - `TTS::OpenAI` asks every model but tts-1/-hd for `stream_format:
+      "sse"`, the only way OpenAI reports speech usage (checked live);
+      tts-1/-hd stay binary and Unpriced (per-character, counting rule
+      undocumented).
+    - The OpenAI image default moved from gpt-image-1 (shuts down
+      2026-10-23) to gpt-image-2.5-sunburst. Overlore draws through
+      mj:camera, so it's unaffected unless its opt-in OpenAI backend is
+      chosen (the user will settle that).
+    - **Waiting on @mj: ElevenLabs.** Its API price page (2026-10-13)
+      lists one rate per model for every plan: $0.08/1K characters for
+      eleven_v4, eleven_v3, eleven_multilingual_v2; $0.04 for
+      eleven_v4_turbo, eleven_v3_conversational, Flash/Turbo. The
+      `character-cost` header's unit is undocumented (characters or
+      credits; Flash is half a credit per character), so it can't be
+      priced until one call is checked. Asked @mj (no ElevenLabs key
+      here). Sound effects stay unpriced: the docs say both $0.12 a minute
+      and "billed per generation".
+    - **Next for arcana:** the daemon's `runware` image reply reads the
+      deprecated Float64 `cost`, and its `tts` reply has no cost yet.
   - **OpenAI speech shutdown, 2027-01-06** (deprecations page, entry
     "2026-10-01: Text-to-speech models"): tts-1, tts-1-hd, both
     gpt-4o-mini-tts snapshots. Replacement gpt-realtime-2.1-mini is
@@ -116,9 +122,9 @@ tag (see [release.md](release.md)).
     Known dates: gpt-5.6-sol's promotional rate is promised only through
     2026-11-21, so calls after that come back Unpriced until it's
     re-checked. Gemini 3.x Flash's 2027-01-01 rise is already in.
-- **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI's model list
-  shows as deprecated (reported by @mj, 2026-10-06). It still works; no
-  replacement chosen.
+- **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI shuts down on
+  2027-01-06 with every other speech-endpoint model (see above). No
+  replacement chosen; it depends on whether anyone wants a Realtime client.
 - **Open (the user is deciding):** retiring the `runware` toolset and the
   `tts` tool on `openai` from `bin/arcana.cr`; see
   [services.md](services.md).

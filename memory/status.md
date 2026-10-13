@@ -81,7 +81,9 @@ tag (see [release.md](release.md)).
       (`includeCost`).
     - OpenAI images: exact from the response's `usage` (text/image input
       tokens, output tokens) times list rates. gpt-image-1 shuts down
-      **2026-10-23** (arcana-ai's default; @overlore told); gpt-image-1.5,
+      **2026-10-23** (arcana-ai's default; @overlore told, and is
+      unaffected: it draws through mj:camera unless its opt-in OpenAI
+      backend is chosen, which the user will settle); gpt-image-1.5,
       -1-mini and chatgpt-image-latest on 2026-12-01; gpt-image-2 and
       gpt-image-2.5-sunburst/-flare are current ($5 text in, $8 image in,
       $30 image out per M). `Image::Result#cost` is a Float64 today
@@ -95,9 +97,21 @@ tag (see [release.md](release.md)).
       but dollars per character depend on the account (plan rates, voice
       multipliers, promos), so USD needs the account's rate. Sound-effect
       billing rules in the docs don't agree with each other.
+  - **Asked by @overlore (2026-10-13):** price speech and OpenAI images in
+    arcana-ai's table, so Overlore and mj drop their own (the user wants
+    prices in one place). Overlore's speech figure is an estimate from
+    text length; its OpenAI images are logged at $0. Not yet answered.
   - **Open:** TTS pricing, to add with @mj (which prices TTS today).
     gpt-4o-mini-tts bills tokens ($0.60/M text in, $12/M audio out), and
     OpenAI reports usage only in the speech endpoint's SSE stream.
+  - **OpenAI speech shutdown, 2027-01-06** (deprecations page, entry
+    "2026-10-01: Text-to-speech models"): tts-1, tts-1-hd, both
+    gpt-4o-mini-tts snapshots. Replacement gpt-realtime-2.1-mini is
+    Realtime-only (`/v1/realtime`). Told @mj, @onboard, @overlore and
+    soaip (by its `.ai/mail/inbox`, which the user said to create) on
+    2026-10-13, asking whether they'd use a Realtime speech client in
+    arcana-ai; their answers decide whether to build one. The daemon's
+    `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through
     2026-11-21, so calls after that come back Unpriced until it's

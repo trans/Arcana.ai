@@ -1,6 +1,6 @@
 # Status
 
-*Updated 2026-10-12*
+*Updated 2026-10-13*
 
 Released: arcana 0.34.0 (`cf892fa`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.5.0 (`30ffecf`).
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -57,11 +57,23 @@ tag (see [release.md](release.md)).
   Replied to @onboard with the API and a migration path off its old arcana
   0.1.0 snapshot (see `mail/sent/`); Onboard's own fixes and its billing
   reconciliation are its call.
-  - **Not yet released:** arcana `6816f04` moves the daemon to arcana-ai
-    0.5.0, and `51bfc69` sends `usage` and `cost` (USD, list price) or
-    `unpriced` back with the chat and embed tools' replies. Its anthropic
-    chat tool still defaults to the retired model until that ships, and
-    it needs the user's install.
+  - **Released in arcana 0.35.0 (2026-10-13):** the daemon on arcana-ai
+    0.5.1; the chat and embed tools reply with `usage` and `cost` (USD,
+    list price) or `unpriced`; the anthropic chat default is current.
+    Needs the user's install.
+  - **Deprecating the old token counts** (the user wants them gone,
+    2026-10-13): arcana-ai 0.5.1 warns at compile time on
+    `Chat::Response#prompt_tokens`, `completion_tokens`,
+    `cache_read_tokens`, `cache_creation_tokens`, `reasoning_tokens` and
+    `Embed::Result#total_tokens`; arcana 0.35.0's replies carry a
+    `deprecated` note on prompt_tokens, completion_tokens,
+    reasoning_tokens and total_tokens. **Removal** (arcana-ai 0.6.0,
+    arcana 0.36.0) waits until the known users have moved:
+    - @onboard (library), @overlore (library, its cost ledger) and @memo
+      (library and bus embed replies): told 2026-10-13, see `mail/sent/`.
+      **Waiting** for each to confirm.
+    - goldfish (library) and likely (bus chat replies) have no agent on
+      the bus: the user to decide how they're moved.
   - **Open:** TTS pricing, to add with @mj (which prices TTS today).
     gpt-4o-mini-tts bills tokens ($0.60/M text in, $12/M audio out), and
     OpenAI reports usage only in the speech endpoint's SSE stream.

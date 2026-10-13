@@ -2,7 +2,7 @@
 
 *Updated 2026-10-13*
 
-Released: arcana 0.34.0 (`cf892fa`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.5.0 (`30ffecf`).
+Released: arcana 0.35.0 (`48d623d`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.5.3 (`627c638`).
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -60,7 +60,9 @@ tag (see [release.md](release.md)).
   - **Released in arcana 0.35.0 (2026-10-13):** the daemon on arcana-ai
     0.5.1; the chat and embed tools reply with `usage` and `cost` (USD,
     list price) or `unpriced`; the anthropic chat default is current.
-    Needs the user's install.
+    **Installed** (the daemon restarted 2026-10-13 01:37 local on the new
+    binary); a live `openai` chat reply carried `usage`, `cost` and the
+    `deprecated` note.
   - **Deprecating the old token counts** (the user wants them gone,
     2026-10-13): arcana-ai 0.5.1 warns at compile time on
     `Chat::Response#prompt_tokens`, `completion_tokens`,
@@ -108,11 +110,25 @@ tag (see [release.md](release.md)).
       priced until one call is checked. Asked @mj (no ElevenLabs key
       here). Sound effects stay unpriced: the docs say both $0.12 a minute
       and "billed per generation".
-    - **Committed in arcana `54b3c31`, not released:** the daemon on
-      arcana-ai 0.5.2; its `tts` reply carries `usage` and `cost`, and
-      its `runware` image reply takes `cost` from `cost(at)` (or says
-      `unpriced`). Releasing it (0.35.1) needs the user's install; they
-      haven't installed 0.35.0 yet either.
+    - **Committed in arcana `54b3c31` and `f45a39a`, not released:** the
+      daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
+      `cost`, its `runware` image reply takes `cost` from `cost(at)` (or
+      says `unpriced`), and its `openai` chat works with current models
+      (see below). Releasing it (0.35.1) needs the user's install.
+  - **Fixed in arcana-ai 0.5.3 (`e361d64`, 2026-10-13): OpenAI chat on
+    gpt-5 and later.** The o-series and every model from gpt-5 on
+    rejected `max_tokens`, and most reject any temperature but their
+    default (1), so only GPT-4/3.5 models worked without thinking (found
+    checking the 0.35.0 install). OpenAI now gets `max_completion_tokens`
+    for every model (checked live, 4o-mini through gpt-6-luna and
+    o4-mini); the request's default 0.7 goes only to `gpt-4*`/`gpt-3.5*`
+    (and `ft:` of those), a caller's own value always goes; Grok and
+    DeepSeek unchanged. The daemon's openai `max_tokens` default went 150
+    → 4096 (`f45a39a`): reasoning counts against it. Only Overlore's
+    banter calls OpenAI chat through the library (on gpt-4o-mini, never
+    affected); told @overlore (see `mail/sent/`). **For 0.6.0:** make
+    `Request#temperature` nilable, since an explicit 0.7 can't be told
+    from the default (Anthropic's client has the same limit).
   - **OpenAI speech shutdown, 2027-01-06** (deprecations page, entry
     "2026-10-01: Text-to-speech models"): tts-1, tts-1-hd, both
     gpt-4o-mini-tts snapshots. Replacement gpt-realtime-2.1-mini is

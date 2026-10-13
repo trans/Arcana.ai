@@ -69,9 +69,10 @@ tag (see [release.md](release.md)).
     `deprecated` note on prompt_tokens, completion_tokens,
     reasoning_tokens and total_tokens. **Removal** (arcana-ai 0.6.0,
     arcana 0.36.0) waits until the known users have moved:
-    - @onboard (library), @overlore (library, its cost ledger) and @memo
-      (library and bus embed replies): told 2026-10-13, see `mail/sent/`.
-      **Waiting** for each to confirm.
+    - @onboard (library) and @memo (library and bus embed replies):
+      told 2026-10-13, see `mail/sent/`. **Waiting** for each to confirm.
+    - @overlore: **moved** (2026-10-13, its ledger reads `usage`; lands
+      in its next commit). It needn't hold up the removals.
     - goldfish (library) and likely (bus chat replies) have no agent on
       the bus: the user to decide how they're moved.
   - **Open:** TTS pricing, to add with @mj (which prices TTS today).

@@ -58,8 +58,10 @@ tag (see [release.md](release.md)).
   0.1.0 snapshot (see `mail/sent/`); Onboard's own fixes and its billing
   reconciliation are its call.
   - **Not yet released:** arcana `6816f04` moves the daemon to arcana-ai
-    0.5.0. Its anthropic chat tool still defaults to the retired model
-    until that ships, and it needs the user's install.
+    0.5.0, and `51bfc69` sends `usage` and `cost` (USD, list price) or
+    `unpriced` back with the chat and embed tools' replies. Its anthropic
+    chat tool still defaults to the retired model until that ships, and
+    it needs the user's install.
   - **Open:** TTS pricing, to add with @mj (which prices TTS today).
     gpt-4o-mini-tts bills tokens ($0.60/M text in, $12/M audio out), and
     OpenAI reports usage only in the speech endpoint's SSE stream.

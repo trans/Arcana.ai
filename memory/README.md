@@ -14,7 +14,7 @@ working on the code needs belongs in the project's own docs, not here.
 
 | File | What it holds |
 |---|---|
-| [status.md](status.md) | Released versions and the open items: TTS default, retiring superseded toolsets |
+| [status.md](status.md) | Released versions and the open items: pricing upkeep and TTS pricing, TTS default, retiring superseded toolsets |
 | [coordination.md](coordination.md) | This project's handle (`@arcana`), arcana-ai's consumers, and the peers on the bus |
 | [services.md](services.md) | Who supplies services: owners, not the daemon; what's decided and what's still open |
 | [registration.md](registration.md) | Handles, owner tokens, presence and the session hooks (0.32.0) |

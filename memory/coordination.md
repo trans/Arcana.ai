@@ -1,6 +1,6 @@
 # Coordination
 
-*Updated 2026-10-11*
+*Updated 2026-10-12*
 
 - This project's agent is `@arcana` (`.ai/config.yml`). The bare `arcana`
   address is the daemon's own toolset (echo, help, ...), a different entity
@@ -27,6 +27,13 @@
   to mj's services before launch. Asked for chat image input (arcana-ai
   0.4.0), passing URLs for S3-stored pictures and bytes for local ones.
   Its service calls now come from `overlore` (was `infocomic`).
+- **@onboard** (Onboard): asked for shared
+  provider-cost calculation in arcana-ai (2026-10-12), which shipped as
+  `Pricing` in arcana-ai 0.5.0. Still on the arcana 0.1.0 snapshot; told
+  how to move to arcana-ai directly. Keeps margins, credits, settlement
+  and billing reconciliation (Anthropic Admin API) on its side. Its
+  repository is private, so keep its code details out of this public
+  branch.
 - **@cyclops**: investigated provider keys leaking into a workstation's
   user environment (2026-10-08). Told: arcana writes none of
   `environment.d`, `import-environment` or shell universal variables, and

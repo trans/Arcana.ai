@@ -2,7 +2,7 @@
 
 *Updated 2026-10-12*
 
-Released: arcana 0.34.0 (`cf892fa`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.4.0.
+Released: arcana 0.34.0 (`cf892fa`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.5.0 (`30ffecf`).
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -43,6 +43,30 @@ tag (see [release.md](release.md)).
   merch's shoppe-service and Copious handle bus requests their own way.
 - **Released in 0.33.0:** the session-end hook writes unread mail to
   `.ai/mail/inbox/` (`e1f3115`), and this `.ai/` moved to the `ai` branch.
+- **Released in arcana-ai 0.5.0 (`9158641`, 2026-10-12): usage and pricing**,
+  asked for by @onboard and wanted by the user, so every project prices
+  calls the same way. `Usage` evens out the providers' token reports;
+  `response.cost` is a `Pricing::Cost` (an exact BigDecimal at list
+  rates, no estimate flag: the user said a price that's known for sure
+  needn't be marked) or `Pricing::Unpriced` with a reason. Rates live in
+  `src/arcana-ai/pricing/rates.yml`, checked against the Anthropic,
+  OpenAI, Gemini and Voyage pricing pages on 2026-10-12. Grok and
+  DeepSeek have no rates yet (their calls come back Unpriced). The same
+  release fixes OpenAI streams, which never recorded usage, and the
+  Anthropic default, retired on 2026-06-15 (now `claude-sonnet-5-5`).
+  Replied to @onboard with the API and a migration path off its old arcana
+  0.1.0 snapshot (see `mail/sent/`); Onboard's own fixes and its billing
+  reconciliation are its call.
+  - **Not yet released:** arcana `6816f04` moves the daemon to arcana-ai
+    0.5.0. Its anthropic chat tool still defaults to the retired model
+    until that ships, and it needs the user's install.
+  - **Open:** TTS pricing, to add with @mj (which prices TTS today).
+    gpt-4o-mini-tts bills tokens ($0.60/M text in, $12/M audio out), and
+    OpenAI reports usage only in the speech endpoint's SSE stream.
+  - **Upkeep:** the table needs updating when providers change prices.
+    Known dates: gpt-5.6-sol's promotional rate is promised only through
+    2026-11-21, so calls after that come back Unpriced until it's
+    re-checked. Gemini 3.x Flash's 2027-01-01 rise is already in.
 - **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI's model list
   shows as deprecated (reported by @mj, 2026-10-06). It still works; no
   replacement chosen.

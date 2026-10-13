@@ -156,4 +156,17 @@ tag (see [release.md](release.md)).
   `tts` tool on `openai` from `bin/arcana.cr`; see
   [services.md](services.md).
 
+- **Open: dot-ai 0.2** (heads-up from @ipck, 2026-10-13; the spec now
+  lives in the user's dot.ai repo, draft 0.2). Mail becomes files that
+  move outbox → recipient's inbox by local delivery; Arcana is one
+  transport (live, other machines). For Arcana: the address moves from
+  `arcana.handle` to a top-level `handle` written without the `@`, with
+  `description` beside it, and the fallback is the directory name, as
+  `AgentConfig.fallback_handle` folds it now. `AgentConfig.load` should
+  read the new keys **before** projects switch, or registrations fall
+  back to directory names in between. Also, the spec writes inbox files
+  under a hidden name (leading `.`) and renames them into place, while
+  the session-end hook's `write_note` uses `<name>.tmp`. The rename
+  isn't scheduled, so nothing is urgent.
+
 Next feature: shared-log topics, see [topics.md](topics.md).

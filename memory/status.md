@@ -75,8 +75,13 @@ tag (see [release.md](release.md)).
       told 2026-10-13, see `mail/sent/`. **Waiting** for each to confirm.
     - @overlore: **moved** (2026-10-13, its ledger reads `usage`; lands
       in its next commit). It needn't hold up the removals.
-    - goldfish (library) and likely (bus chat replies) have no agent on
-      the bus: the user to decide how they're moved.
+    - goldfish (library) and likely (bus chat replies), which have no
+      agent: **moved** by Arcana with the user's go-ahead (2026-10-13),
+      committed in their repos, not pushed. goldfish `3c4d9bd` reads
+      `usage` (lock 0.1.0 → arcana-ai 0.5.3; its specs need
+      `KEMAL_ENV=test`, or `Kemal.run` keeps the run open). likely
+      `c7bc25f` reads `usage`, falling back to the old fields for daemons
+      before 0.35.0.
   - **Released in arcana-ai 0.5.2 (`8e8399d`, 2026-10-13): image and
     speech pricing**, asked for by @overlore so apps drop their own rates
     (the user wants prices in one place). Answered @overlore and told @mj
@@ -110,11 +115,14 @@ tag (see [release.md](release.md)).
       priced until one call is checked. Asked @mj (no ElevenLabs key
       here). Sound effects stay unpriced: the docs say both $0.12 a minute
       and "billed per generation".
-    - **Committed in arcana `54b3c31` and `f45a39a`, not released:** the
+    - **arcana 0.35.1 tagged locally (`45e08c7`), not pushed:** the
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or
       says `unpriced`), and its `openai` chat works with current models
-      (see below). Releasing it (0.35.1) needs the user's install.
+      (see below). The user approved the release (2026-10-13), but the
+      push of main and the tag was blocked by a permission check, so it
+      waits on the user; then `gh release create v0.35.1` and their
+      install.
   - **Fixed in arcana-ai 0.5.3 (`e361d64`, 2026-10-13): OpenAI chat on
     gpt-5 and later.** The o-series and every model from gpt-5 on
     rejected `max_tokens`, and most reject any temperature but their

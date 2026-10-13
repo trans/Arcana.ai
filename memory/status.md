@@ -2,7 +2,8 @@
 
 *Updated 2026-10-13*
 
-Released: arcana 0.35.0 (`48d623d`), arcana-core 0.18.0 (`71adad6`), arcana-ai 0.5.3 (`627c638`).
+Released: arcana 0.35.0 (`48d623d`), arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`).
+Tagged, not pushed: arcana 0.35.1 (`45e08c7`) and 0.35.2 (`1ab1d41`, topics); see below.
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -119,10 +120,11 @@ tag (see [release.md](release.md)).
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or
       says `unpriced`), and its `openai` chat works with current models
-      (see below). The user approved the release (2026-10-13), but the
-      push of main and the tag was blocked by a permission check, so it
-      waits on the user; then `gh release create v0.35.1` and their
-      install.
+      (see below). The user approved the release (2026-10-13), but a
+      permission check blocked Arcana's push of main and the tag, so the
+      user pushes it, with 0.35.2 (topics, [topics.md](topics.md)):
+      main and both tags, `gh release create` for each, then one
+      install of 0.35.2.
   - **Fixed in arcana-ai 0.5.3 (`e361d64`, 2026-10-13): OpenAI chat on
     gpt-5 and later.** The o-series and every model from gpt-5 on
     rejected `max_tokens`, and most reject any temperature but their
@@ -143,8 +145,12 @@ tag (see [release.md](release.md)).
     Realtime-only (`/v1/realtime`). Told @mj, @onboard, @overlore and
     soaip (by its `.ai/mail/inbox`, which the user said to create) on
     2026-10-13, asking whether they'd use a Realtime speech client in
-    arcana-ai; their answers decide whether to build one. The daemon's
-    `openai` tts tool stops too.
+    arcana-ai; their answers decide whether to build one. **@overlore:
+    no** (the user decided 2026-10-13 that Overlore moves all its speech
+    to ElevenLabs through mj:voice; it now prices speech and pictures
+    with arcana-ai 0.5.2, and wants ElevenLabs prices once @mj's check
+    settles `character-cost`). Waiting on @mj, @onboard, soaip. The
+    daemon's `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through
     2026-11-21, so calls after that come back Unpriced until it's
@@ -157,9 +163,10 @@ tag (see [release.md](release.md)).
   [services.md](services.md).
 
 - **Open: dot-ai 0.2** (heads-up from @ipck, 2026-10-13; the spec now
-  lives in the user's dot.ai repo, draft 0.2). Mail becomes files that
-  move outbox → recipient's inbox by local delivery; Arcana is one
-  transport (live, other machines). For Arcana: the address moves from
+  lives in the user's dot.ai repo, draft 0.2). Mail can move as files,
+  outbox → recipient's inbox by local delivery ("snail mail"). The user
+  (2026-10-13): that is a local fallback, **not a replacement for
+  Arcana's messaging**, which stays the main way agents talk. For Arcana: the address moves from
   `arcana.handle` to a top-level `handle` written without the `@`, with
   `description` beside it, and the fallback is the directory name, as
   `AgentConfig.fallback_handle` folds it now. `AgentConfig.load` should
@@ -169,4 +176,4 @@ tag (see [release.md](release.md)).
   the session-end hook's `write_note` uses `<name>.tmp`. The rename
   isn't scheduled, so nothing is urgent.
 
-Next feature: shared-log topics, see [topics.md](topics.md).
+Shared-log topics: built, see [topics.md](topics.md).

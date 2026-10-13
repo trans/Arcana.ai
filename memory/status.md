@@ -108,8 +108,11 @@ tag (see [release.md](release.md)).
       priced until one call is checked. Asked @mj (no ElevenLabs key
       here). Sound effects stay unpriced: the docs say both $0.12 a minute
       and "billed per generation".
-    - **Next for arcana:** the daemon's `runware` image reply reads the
-      deprecated Float64 `cost`, and its `tts` reply has no cost yet.
+    - **Committed in arcana `54b3c31`, not released:** the daemon on
+      arcana-ai 0.5.2; its `tts` reply carries `usage` and `cost`, and
+      its `runware` image reply takes `cost` from `cost(at)` (or says
+      `unpriced`). Releasing it (0.35.1) needs the user's install; they
+      haven't installed 0.35.0 yet either.
   - **OpenAI speech shutdown, 2027-01-06** (deprecations page, entry
     "2026-10-01: Text-to-speech models"): tts-1, tts-1-hd, both
     gpt-4o-mini-tts snapshots. Replacement gpt-realtime-2.1-mini is

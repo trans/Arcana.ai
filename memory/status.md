@@ -4,7 +4,7 @@
 
 Released: arcana 0.35.3 (`378da16`, 2026-10-14, with 0.35.1 and 0.35.2),
 arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
-arcana 0.35.0 until the user installs 0.35.3.
+arcana 0.35.3 (2026-10-14; the daemon restarted on it).
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -124,7 +124,7 @@ tag (see [release.md](release.md)).
       (see below). A permission check blocked Arcana's push, so the user
       pushed main and the tags for 0.35.1, 0.35.2 (topics,
       [topics.md](topics.md)) and 0.35.3 (dot-ai 0.3, below), and Arcana
-      made the GitHub releases. **Waiting:** the user installs 0.35.3.
+      made the GitHub releases. 0.35.3 installed 2026-10-14.
   - **Fixed in arcana-ai 0.5.3 (`e361d64`, 2026-10-13): OpenAI chat on
     gpt-5 and later.** The o-series and every model from gpt-5 on
     rejected `max_tokens`, and most reject any temperature but their

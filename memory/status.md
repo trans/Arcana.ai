@@ -5,8 +5,8 @@
 Released: arcana 0.35.3 (`378da16`, 2026-10-14, with 0.35.1 and 0.35.2),
 arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
 arcana 0.35.3 (2026-10-14; the daemon restarted on it).
-Tagged, not pushed: arcana 0.35.4 (`b4b461a`, `arcana_receive` writes the
-inbox file; see below).
+Released, not installed: arcana 0.35.4 (`b4b461a`, 2026-10-14,
+`arcana_receive` writes the inbox file; see below).
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -178,8 +178,8 @@ tag (see [release.md](release.md)).
   files into `.ai/mail/inbox/` (cyclops, likely, onboard,
   siliconcircus.lol, guestservices, wow; none had `.ai/` in git), unread,
   for their agents.
-- **Tagged in arcana 0.35.4 (`cd9852e`, 2026-10-14), not pushed:
-  `arcana_receive` writes the inbox file**, as @ipck asked (the user's
+- **Released in arcana 0.35.4 (`cd9852e`, 2026-10-14), not installed
+  yet: `arcana_receive` writes the inbox file**, as @ipck asked (the user's
   rule since dot.ai `86524e5`: every message between projects is
   recorded on both sides). The bridge writes each message from an `@`
   address to the project's own handle into `.ai/mail/inbox/` before

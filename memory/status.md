@@ -187,15 +187,19 @@ tag (see [release.md](release.md)).
   topic notices and service replies. Both paths now write `Via: arcana`.
   Until 0.35.4 is installed, write the file yourself before acting on a
   received message.
-- **Open (the user decides): dot-ai-mail**, a local delivery tool @ipck
-  designed (dot.ai `notes/dot-ai-mail.md`, `5415b41`). Arcana's answers
-  (2026-10-14, see `mail/sent/`): its hooks never touch the outbox; a
-  separate tool is right, since dot-ai must work without the bus; and
-  Arcana shouldn't move bus mail into the inbox at Stop, because Claude
-  Code runs one event's hooks in parallel, so the two hooks would race
-  over the inbox. One voice would take one process doing both in order
-  (a drain command dot-ai-mail calls first); Arcana would build that if
-  the user wants it.
+- **Open (the user is still deciding, 2026-10-14): dot-ai-mail**, a
+  local delivery tool @ipck designed (dot.ai `notes/dot-ai-mail.md`,
+  `5415b41`). The user's reason for it: dot-ai stands on its own, simple
+  and with nothing to install, and leads on to Arcana. Arcana backs it on
+  those terms (told @ipck 2026-10-14, see `mail/sent/`): the files never
+  change with Arcana; Arcana adds what files can't reach (other
+  machines, the cloud, live sessions); dot-ai-mail is the one hook that
+  announces mail, calling an Arcana drain command first, since Claude
+  Code runs one event's hooks in parallel and two would race. Arcana's
+  pieces, **not scheduled**: send what's left in the outbox and file it
+  under `sent/`; the drain command; and no session-end draining where
+  the inbox won't survive (a cloud container), so the bus keeps unread
+  mail there.
 - Snail mail (files between projects' `.ai/mail/` folders) is a local
   fallback, **not a replacement for Arcana's messaging**, which stays
   the main way agents talk (the user, 2026-10-13).

@@ -2,9 +2,8 @@
 
 *Updated 2026-10-13*
 
-**Built** in arcana-core 0.19.0 (`3fc248f`, released) and arcana 0.35.2
-(`dfd0a4b`, tagged; the push waits on the user, see
-[status.md](status.md)). The user approved building it on 2026-10-13,
+**Built** in arcana-core 0.19.0 (`3fc248f`) and arcana 0.35.2
+(`dfd0a4b`), both released (arcana on 2026-10-14). The user approved building it on 2026-10-13,
 shipped on its own rather than bundled with the event-log cleanup.
 
 A `#topic` is a log everyone reads: a post is stored once and numbered,

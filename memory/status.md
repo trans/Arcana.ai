@@ -2,9 +2,9 @@
 
 *Updated 2026-10-14*
 
-Released: arcana 0.35.0 (`48d623d`), arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`).
-Tagged, not pushed: arcana 0.35.1 (`45e08c7`), 0.35.2 (`1ab1d41`, topics)
-and 0.35.3 (`378da16`, dot-ai 0.3 hooks); see below.
+Released: arcana 0.35.3 (`378da16`, 2026-10-14, with 0.35.1 and 0.35.2),
+arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
+arcana 0.35.0 until the user installs 0.35.3.
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -117,15 +117,14 @@ tag (see [release.md](release.md)).
       priced until one call is checked. Asked @mj (no ElevenLabs key
       here). Sound effects stay unpriced: the docs say both $0.12 a minute
       and "billed per generation".
-    - **arcana 0.35.1 tagged locally (`45e08c7`), not pushed:** the
+    - **Released in arcana 0.35.1 (`45e08c7`, 2026-10-14):** the
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or
       says `unpriced`), and its `openai` chat works with current models
-      (see below). The user approved the release (2026-10-13), but a
-      permission check blocked Arcana's push of main and the tag, so the
-      user pushes it, with 0.35.2 (topics, [topics.md](topics.md)) and
-      0.35.3 (dot-ai 0.3, below): main and the three tags,
-      `gh release create` for each, then one install of 0.35.3.
+      (see below). A permission check blocked Arcana's push, so the user
+      pushed main and the tags for 0.35.1, 0.35.2 (topics,
+      [topics.md](topics.md)) and 0.35.3 (dot-ai 0.3, below), and Arcana
+      made the GitHub releases. **Waiting:** the user installs 0.35.3.
   - **Fixed in arcana-ai 0.5.3 (`e361d64`, 2026-10-13): OpenAI chat on
     gpt-5 and later.** The o-series and every model from gpt-5 on
     rejected `max_tokens`, and most reject any temperature but their

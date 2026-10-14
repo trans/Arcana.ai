@@ -5,6 +5,8 @@
 Released: arcana 0.35.3 (`378da16`, 2026-10-14, with 0.35.1 and 0.35.2),
 arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
 arcana 0.35.3 (2026-10-14; the daemon restarted on it).
+Tagged, not pushed: arcana 0.35.4 (`b4b461a`, `arcana_receive` writes the
+inbox file; see below).
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -73,8 +75,12 @@ tag (see [release.md](release.md)).
     `deprecated` note on prompt_tokens, completion_tokens,
     reasoning_tokens and total_tokens. **Removal** (arcana-ai 0.6.0,
     arcana 0.36.0) waits until the known users have moved:
-    - @onboard (library) and @memo (library and bus embed replies):
-      told 2026-10-13, see `mail/sent/`. **Waiting** for each to confirm.
+    - @onboard (library): told 2026-10-13, see `mail/sent/`. **Waiting**
+      for it to confirm; the only one left.
+    - @memo: **moved** in memo 0.13.1 (released 2026-10-14; reads
+      `usage.input`, needs arcana-ai ~> 0.5.1). memo 0.13.0 is pinned to
+      arcana-ai ~> 0.4.0 and treats a missing `total_tokens` as 0, so it
+      doesn't hold up the removals either (see `mail/received/`).
     - @overlore: **moved** (2026-10-13, its ledger reads `usage`; lands
       in its next commit). It needn't hold up the removals.
     - goldfish (library) and likely (bus chat replies), which have no
@@ -162,21 +168,34 @@ tag (see [release.md](release.md)).
   `tts` tool on `openai` from `bin/arcana.cr`; see
   [services.md](services.md).
 
-- **Done in arcana 0.35.3 (`43a28ed`, tagged 2026-10-14): dot-ai draft
-  0.3.** @ipck asked, for the user, that every project move to 0.3 in
-  one pass, Arcana first. `AgentConfig.load` reads the top-level
-  `handle` and `description`, and still reads the old `arcana:` keys
-  when those are missing (Arcana's call, so nothing registers under a
-  directory name between the install and the upgrade). The session-end
-  hook names inbox files `<UTC time>-<sender>--<topic>-<id8>.md`, writes
-  them under a hidden name, and keeps a topic's `#` in the sender. Told
-  @ipck 2026-10-14. **Next, after the install:** the user runs the
-  upgrade script over all projects (a dry run on this one plans the
-  config move, 18 renames in `mail/sent/`, `mail/received/`, and
-  intake/outtake in the project directory), then installs the 0.3
-  skill. Then the inbox is machine-local and read mail moves to
-  `mail/received/` instead of commit-then-delete; update this
-  branch's README conventions to match.
+- **Done: dot-ai draft 0.3.** arcana 0.35.3 (`43a28ed`, released
+  2026-10-14) reads the top-level `handle` and `description` (and still
+  the old `arcana:` keys when those are missing, Arcana's call) and names
+  inbox files `<UTC time>-<sender>--<topic>-<id8>.md`. The user ran the
+  upgrade script over every project and installed the 0.3 skill
+  (2026-10-14; this branch's commit `c7dc13a`). Before that, at the
+  user's request, Arcana moved six projects' pre-`mail/` `.ai/inbox/`
+  files into `.ai/mail/inbox/` (cyclops, likely, onboard,
+  siliconcircus.lol, guestservices, wow; none had `.ai/` in git), unread,
+  for their agents.
+- **Tagged in arcana 0.35.4 (`cd9852e`, 2026-10-14), not pushed:
+  `arcana_receive` writes the inbox file**, as @ipck asked (the user's
+  rule since dot.ai `86524e5`: every message between projects is
+  recorded on both sides). The bridge writes each message from an `@`
+  address to the project's own handle into `.ai/mail/inbox/` before
+  returning it, names it in `inbox_file` (or `inbox_error`), and skips
+  topic notices and service replies. Both paths now write `Via: arcana`.
+  Until 0.35.4 is installed, write the file yourself before acting on a
+  received message.
+- **Open (the user decides): dot-ai-mail**, a local delivery tool @ipck
+  designed (dot.ai `notes/dot-ai-mail.md`, `5415b41`). Arcana's answers
+  (2026-10-14, see `mail/sent/`): its hooks never touch the outbox; a
+  separate tool is right, since dot-ai must work without the bus; and
+  Arcana shouldn't move bus mail into the inbox at Stop, because Claude
+  Code runs one event's hooks in parallel, so the two hooks would race
+  over the inbox. One voice would take one process doing both in order
+  (a drain command dot-ai-mail calls first); Arcana would build that if
+  the user wants it.
 - Snail mail (files between projects' `.ai/mail/` folders) is a local
   fallback, **not a replacement for Arcana's messaging**, which stays
   the main way agents talk (the user, 2026-10-13).

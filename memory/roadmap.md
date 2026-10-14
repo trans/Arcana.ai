@@ -1,6 +1,6 @@
 # Later
 
-*Updated 2026-10-08*
+*Updated 2026-10-14*
 
 Planned or parked work beyond [status.md](status.md) and
 [topics.md](topics.md). None of it is scheduled.
@@ -20,3 +20,10 @@ Planned or parked work beyond [status.md](status.md) and
   [registration.md](registration.md).
 - **Chain-of-thought** shipped (arcana-ai 0.2.0, arcana 0.31.0); a separate
   `anthropic:research` service for web search waits for a second consumer.
+- **Transcript encryption to recipients** (an idea the user had
+  @azookabay pass on, 2026-10-14; `mail/received/`): encrypt each
+  transcript to public keys listed in the config (with `age`, say), so
+  machines that write transcripts hold no secret, with the reading key on
+  a hardware token plus an offline backup. Not Arcana's to build:
+  transcripts are written by the runtime (Copious) to the dot-ai spec.
+  Noted here until the user says where it goes.

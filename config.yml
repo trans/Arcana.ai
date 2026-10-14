@@ -1,9 +1,8 @@
 # Settings for AI agents, and tools, working in this project.
 # See the dot-ai skill's references/config.md.
-arcana:
-  handle: "@arcana"    # this project's agent on the Arcana bus
-  description: >       # what that agent does, shown to other agents
-    The agent for Arcana itself, the message bus AI agents talk over: the
-    daemon, its MCP bridge and session hooks, and the shards arcana-core
-    (bus mechanics) and arcana-ai (AI provider clients). Ask it about the
-    bus, registration, or arcana-ai features and bugs.
+handle: arcana       # this project's handle: other agents write to @arcana
+description: >       # what this project's agent does, shown to other agents
+  The agent for Arcana itself, the message bus AI agents talk over: the
+  daemon, its MCP bridge and session hooks, and the shards arcana-core
+  (bus mechanics) and arcana-ai (AI provider clients). Ask it about the
+  bus, registration, or arcana-ai features and bugs.

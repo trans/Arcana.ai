@@ -1,9 +1,10 @@
 # Status
 
-*Updated 2026-10-13*
+*Updated 2026-10-14*
 
 Released: arcana 0.35.0 (`48d623d`), arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`).
-Tagged, not pushed: arcana 0.35.1 (`45e08c7`) and 0.35.2 (`1ab1d41`, topics); see below.
+Tagged, not pushed: arcana 0.35.1 (`45e08c7`), 0.35.2 (`1ab1d41`, topics)
+and 0.35.3 (`378da16`, dot-ai 0.3 hooks); see below.
 All three are tagged with GitHub releases; arcana's packages build from the
 tag (see [release.md](release.md)).
 
@@ -122,9 +123,9 @@ tag (see [release.md](release.md)).
       says `unpriced`), and its `openai` chat works with current models
       (see below). The user approved the release (2026-10-13), but a
       permission check blocked Arcana's push of main and the tag, so the
-      user pushes it, with 0.35.2 (topics, [topics.md](topics.md)):
-      main and both tags, `gh release create` for each, then one
-      install of 0.35.2.
+      user pushes it, with 0.35.2 (topics, [topics.md](topics.md)) and
+      0.35.3 (dot-ai 0.3, below): main and the three tags,
+      `gh release create` for each, then one install of 0.35.3.
   - **Fixed in arcana-ai 0.5.3 (`e361d64`, 2026-10-13): OpenAI chat on
     gpt-5 and later.** The o-series and every model from gpt-5 on
     rejected `max_tokens`, and most reject any temperature but their
@@ -162,18 +163,23 @@ tag (see [release.md](release.md)).
   `tts` tool on `openai` from `bin/arcana.cr`; see
   [services.md](services.md).
 
-- **Open: dot-ai 0.2** (heads-up from @ipck, 2026-10-13; the spec now
-  lives in the user's dot.ai repo, draft 0.2). Mail can move as files,
-  outbox → recipient's inbox by local delivery ("snail mail"). The user
-  (2026-10-13): that is a local fallback, **not a replacement for
-  Arcana's messaging**, which stays the main way agents talk. For Arcana: the address moves from
-  `arcana.handle` to a top-level `handle` written without the `@`, with
-  `description` beside it, and the fallback is the directory name, as
-  `AgentConfig.fallback_handle` folds it now. `AgentConfig.load` should
-  read the new keys **before** projects switch, or registrations fall
-  back to directory names in between. Also, the spec writes inbox files
-  under a hidden name (leading `.`) and renames them into place, while
-  the session-end hook's `write_note` uses `<name>.tmp`. The rename
-  isn't scheduled, so nothing is urgent.
+- **Done in arcana 0.35.3 (`43a28ed`, tagged 2026-10-14): dot-ai draft
+  0.3.** @ipck asked, for the user, that every project move to 0.3 in
+  one pass, Arcana first. `AgentConfig.load` reads the top-level
+  `handle` and `description`, and still reads the old `arcana:` keys
+  when those are missing (Arcana's call, so nothing registers under a
+  directory name between the install and the upgrade). The session-end
+  hook names inbox files `<UTC time>-<sender>--<topic>-<id8>.md`, writes
+  them under a hidden name, and keeps a topic's `#` in the sender. Told
+  @ipck 2026-10-14. **Next, after the install:** the user runs the
+  upgrade script over all projects (a dry run on this one plans the
+  config move, 18 renames in `mail/sent/`, `mail/received/`, and
+  intake/outtake in the project directory), then installs the 0.3
+  skill. Then the inbox is machine-local and read mail moves to
+  `mail/received/` instead of commit-then-delete; update this
+  branch's README conventions to match.
+- Snail mail (files between projects' `.ai/mail/` folders) is a local
+  fallback, **not a replacement for Arcana's messaging**, which stays
+  the main way agents talk (the user, 2026-10-13).
 
 Shared-log topics: built, see [topics.md](topics.md).

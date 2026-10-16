@@ -196,27 +196,26 @@ tag (see [release.md](release.md)).
   the skill (`dot-ai:dot-ai` in Claude Code) plus hooks that run
   dot-ai-mail 0.1.0 at session start, Stop and session end. The user
   installed it on 2026-10-16 (@ipck's mail, `mail/received/`).
-- **Built in arcana 0.35.5 (`3de6471`), not yet released: `arcana hook
-  drain`**, which the user asked for so dot-ai-mail is the one voice.
-  dot-ai-mail runs it before it looks at the inbox, with its hook JSON on
-  stdin. Mail from `@` and `#` senders becomes inbox files, and their
-  paths are printed. Service replies stay on the bus for `arcana_receive
-  id:`: the bus forgets an expectation once its reply lands, so the
-  sender is the only line to draw. Arcana's settled choices (2026-10-16):
-  - A drained session is marked, and there Arcana's Stop hook speaks
-    only for service replies. This needs no reading of plugin settings,
-    and a dot-ai-mail that doesn't drain (0.1.0) leaves Arcana as it was.
-  - A drained handle is marked for the login, and session start then
-    leaves the waiting count out.
-  - `CLAUDE_CODE_REMOTE=true` means no inbox files from the drain or from
-    session end, so the bus keeps unread mail.
-  - Stop nudges once per change in the count, for both agents; before
-    this, Claude was nudged on every other Stop and Codex on every Stop.
-
-  Told @ipck, along with a review of the dot-ai side. **Open:** waiting
-  for dot-ai-mail to call the drain, and for the user to decide on a send
-  command (dot-ai-mail would call it for outbox messages it can't place
-  and file each under `sent/`).
+- **Withdrawn (2026-10-16): `arcana hook drain`**, built in `3de6471`
+  (0.35.5, tagged locally, not pushed). The user meant dot-ai-mail as
+  light mail for one machine without Arcana, so it never calls Arcana,
+  and the drain has no caller. It came from Arcana's own one-voice idea
+  (2026-10-14). @ipck's note said the user had asked for it, and Arcana
+  built it without checking with the user. Each tool keeps announcing
+  its own place. Not shipping it means rewinding the local commits;
+  `3de6471` also has a fix worth keeping (Stop nudges once per change in
+  the count). That waits on the user.
+- **Open (the user is undecided, 2026-10-16): does mail need a committed
+  record?** Mail files do two jobs: a queue (the inbox, for agents that
+  aren't running and for `.ai/` without Arcana) and a record (`sent/` and
+  `received/`, from @ipck's provenance concern). Arcana's view: where
+  transcripts are committed, the record is a second copy. But today only
+  Copious commits transcripts, and redaction can change a message. So
+  keep the queue, and let transcripts and notes be the record. A cloud
+  harness would then need no mail files: Arcana delivers, holds mail for
+  offline agents, and lists who exists. Also floated, not decided:
+  `arcana_deliver` writing the `sent/` copy itself. Summary sent to @ipck
+  (`mail/sent/`).
 - Snail mail (files between projects' `.ai/mail/` folders) is a local
   fallback, **not a replacement for Arcana's messaging**, which stays
   the main way agents talk (the user, 2026-10-13).

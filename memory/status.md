@@ -1,10 +1,11 @@
 # Status
 
-*Updated 2026-10-14*
+*Updated 2026-10-16*
 
-Released: arcana 0.35.3 (`378da16`, 2026-10-14, with 0.35.1 and 0.35.2),
+Released: arcana 0.35.4 (`b4b461a`, 2026-10-14, with 0.35.1–0.35.3),
 arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
-arcana 0.35.4 (`b4b461a`, 2026-10-14; the daemon restarted on it).
+arcana 0.35.4 (the daemon restarted on it). Committed and tagged, not
+pushed: arcana 0.35.5 (`48a6ce1`, the drain).
 Sessions started before an install keep the old MCP bridge until they
 restart.
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -187,19 +188,35 @@ tag (see [release.md](release.md)).
   topic notices and service replies. Both paths now write `Via: arcana`.
   A session whose bridge predates 0.35.4 still writes the file itself
   before acting on a received message.
-- **Open (the user is still deciding, 2026-10-14): dot-ai-mail**, a
-  local delivery tool @ipck designed (dot.ai `notes/dot-ai-mail.md`,
-  `5415b41`). The user's reason for it: dot-ai stands on its own, simple
-  and with nothing to install, and leads on to Arcana. Arcana backs it on
-  those terms (told @ipck 2026-10-14, see `mail/sent/`): the files never
-  change with Arcana; Arcana adds what files can't reach (other
-  machines, the cloud, live sessions); dot-ai-mail is the one hook that
-  announces mail, calling an Arcana drain command first, since Claude
-  Code runs one event's hooks in parallel and two would race. Arcana's
-  pieces, **not scheduled**: send what's left in the outbox and file it
-  under `sent/`; the drain command; and no session-end draining where
-  the inbox won't survive (a cloud container), so the bus keeps unread
-  mail there.
+- **dot-ai-mail and Arcana: layers, no switch** (the user decided,
+  2026-10-15). dot-ai-mail always does local mail, with or without
+  Arcana; Arcana does what's above it: other machines, cloud agents,
+  live sessions, services. No setting chooses between them. dot-ai is
+  now one plugin for Claude Code and Codex (`trans/dot-ai`, `95c1c9a`):
+  the skill (`dot-ai:dot-ai` in Claude Code) plus hooks that run
+  dot-ai-mail 0.1.0 at session start, Stop and session end. The user
+  installed it on 2026-10-16 (@ipck's mail, `mail/received/`).
+- **Built in arcana 0.35.5 (`3de6471`), not yet released: `arcana hook
+  drain`**, which the user asked for so dot-ai-mail is the one voice.
+  dot-ai-mail runs it before it looks at the inbox, with its hook JSON on
+  stdin. Mail from `@` and `#` senders becomes inbox files, and their
+  paths are printed. Service replies stay on the bus for `arcana_receive
+  id:`: the bus forgets an expectation once its reply lands, so the
+  sender is the only line to draw. Arcana's settled choices (2026-10-16):
+  - A drained session is marked, and there Arcana's Stop hook speaks
+    only for service replies. This needs no reading of plugin settings,
+    and a dot-ai-mail that doesn't drain (0.1.0) leaves Arcana as it was.
+  - A drained handle is marked for the login, and session start then
+    leaves the waiting count out.
+  - `CLAUDE_CODE_REMOTE=true` means no inbox files from the drain or from
+    session end, so the bus keeps unread mail.
+  - Stop nudges once per change in the count, for both agents; before
+    this, Claude was nudged on every other Stop and Codex on every Stop.
+
+  Told @ipck, along with a review of the dot-ai side. **Open:** waiting
+  for dot-ai-mail to call the drain, and for the user to decide on a send
+  command (dot-ai-mail would call it for outbox messages it can't place
+  and file each under `sent/`).
 - Snail mail (files between projects' `.ai/mail/` folders) is a local
   fallback, **not a replacement for Arcana's messaging**, which stays
   the main way agents talk (the user, 2026-10-13).

@@ -2,12 +2,9 @@
 
 *Updated 2026-10-17*
 
-Released: arcana 0.35.4 (`b4b461a`, 2026-10-14, with 0.35.1–0.35.3),
-arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
-arcana 0.35.4 (the daemon restarted on it). Committed, not tagged or
-pushed: arcana 0.35.5 (`b1bd0b4`: `arcana_deliver` files the sent copy,
-a session's project is the nearest `.ai/` (through an `.ai` link too),
-and the Stop fix).
+Released: arcana 0.35.5 (`b1bd0b4`, 2026-10-17), arcana-core 0.19.0
+(`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed: arcana 0.35.4 (the
+daemon restarted on it); 0.35.5 waits for `just install-pkg`.
 Sessions started before an install keep the old MCP bridge until they
 restart.
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -214,7 +211,7 @@ tag (see [release.md](release.md)).
   duplication: a transcript keeps a pinned view's path, not the file's
   text. An agent without a checkout needs no mail files; Arcana carries
   the mail.
-- **Built (2026-10-17), not released: `arcana_deliver` files the sender's
+- **Released in 0.35.5 (2026-10-17): `arcana_deliver` files the sender's
   copy** (the user decided, 2026-10-17; `0521bc2`, 0.35.5). It's the
   mirror of `arcana_receive` writing the inbox file. Each message from
   the project's own handle to an agent that the bus took goes into
@@ -231,7 +228,7 @@ tag (see [release.md](release.md)).
   With no `.ai/` anywhere above, the session's own directory keeps the
   fallback handle (`@` plus its name, token under XDG state), so Arcana
   still works without dot-ai; the user chose that over not registering.
-  **Built in `1cb0528` (0.35.5, not released):** `AgentConfig.project_root`
+  **Released in 0.35.5 (`1cb0528`):** `AgentConfig.project_root`
   and `find` walk up, resolving symbolic links as dot-ai-mail does, for
   the hooks and the bridge. The fallback handles registered from
   directories without `.ai/` (`@pirateship`, `@tabcomputing-com` on

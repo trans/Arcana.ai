@@ -173,17 +173,17 @@ tag (see [release.md](release.md)).
     to ElevenLabs through mj:voice; it now prices speech and pictures
     with arcana-ai 0.5.2; ElevenLabs is priced since 0.5.5, see above).
     **The user, 2026-10-17: onboard might use Realtime voice; mj and soaip
-    won't.** Asked @onboard again 2026-10-17; it answered that the
-    question is the user's and Onboard has decided nothing. So whether to
-    build a Realtime client **waits on the user**. The
+    won't.** **Decided (the user, 2026-10-17): Onboard wants a Realtime
+    speech client;** not now, on the to-do list in
+    [roadmap.md](roadmap.md), due before the shutdown. The
     daemon's `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through
     2026-11-21, so calls after that come back Unpriced until it's
     re-checked. Gemini 3.x Flash's 2027-01-01 rise is already in.
 - **Open:** TTS defaults to `gpt-4o-mini-tts`, which OpenAI shuts down on
-  2027-01-06 with every other speech-endpoint model (see above). No
-  replacement chosen; it depends on whether anyone wants a Realtime client.
+  2027-01-06 with every other speech-endpoint model (see above). Settled
+  along with the Realtime client on the to-do list ([roadmap.md](roadmap.md)).
 - **Open (the user is deciding):** retiring the `runware` toolset and the
   `tts` tool on `openai` from `bin/arcana.cr`; see
   [services.md](services.md).

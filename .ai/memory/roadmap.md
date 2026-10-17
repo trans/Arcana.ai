@@ -1,10 +1,18 @@
 # Later
 
-*Updated 2026-10-14*
+*Updated 2026-10-17*
 
 Planned or parked work beyond [status.md](status.md) and
 [topics.md](topics.md). None of it is scheduled.
 
+- **TODO: a Realtime speech client in arcana-ai, for Onboard** (the user,
+  2026-10-17: Onboard wants one; not now, but before OpenAI's speech
+  endpoint shuts down on 2027-01-06). OpenAI's replacement,
+  gpt-realtime-2.1-mini, runs only on the Realtime API (`/v1/realtime`,
+  a WebSocket session), so it's a new client, not a model swap. Decide
+  then whether `TTS::OpenAI` and the daemon's `openai` `tts` tool move to
+  it or stop. Only Onboard asked; mj and soaip won't use it. See
+  [status.md](status.md).
 - **SaaS auth stage 3, per-org isolation.** Stages 1 (identities, orgs, API
   keys in Postgres, `arcana-admin`) and 2 (bearer tokens enforced with
   `ARCANA_AUTH_REQUIRED=1`) shipped in 0.18 and 0.19. Stage 3 splits into

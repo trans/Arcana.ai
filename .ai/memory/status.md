@@ -74,9 +74,14 @@ tag (see [release.md](release.md)).
     `Embed::Result#total_tokens`; arcana 0.35.0's replies carry a
     `deprecated` note on prompt_tokens, completion_tokens,
     reasoning_tokens and total_tokens. **Removal** (arcana-ai 0.6.0,
-    arcana 0.36.0) waits until the known users have moved:
-    - @onboard (library): told 2026-10-13, asked again 2026-10-17, see
-      `mail/sent/`. **Waiting** for it to confirm; the only one left.
+    arcana 0.36.0) waited until the known users had moved. **All have,
+    as of 2026-10-17, so it can go ahead:**
+    - @onboard (library): **moved** in its working tree (2026-10-17,
+      `mail/received/20261017-221344Z-@onboard--onboard-token-usage-status-16ed4cf9.md`):
+      it reads `usage` and `cost` on arcana-ai 0.5.1, and nothing in its
+      src/ or spec/ reads the old getters. Tested locally, not yet
+      committed or deployed. Its `~> 0.5.1` keeps 0.6.0 out until it
+      raises the constraint.
     - @memo: **moved** in memo 0.13.1 (released 2026-10-14; reads
       `usage.input`, needs arcana-ai ~> 0.5.1). memo 0.13.0 is pinned to
       arcana-ai ~> 0.4.0 and treats a missing `total_tokens` as 0, so it
@@ -168,8 +173,9 @@ tag (see [release.md](release.md)).
     to ElevenLabs through mj:voice; it now prices speech and pictures
     with arcana-ai 0.5.2; ElevenLabs is priced since 0.5.5, see above).
     **The user, 2026-10-17: onboard might use Realtime voice; mj and soaip
-    won't.** So a Realtime client waits on @onboard alone; asked it
-    again 2026-10-17, with the token-count question. The
+    won't.** Asked @onboard again 2026-10-17; it answered that the
+    question is the user's and Onboard has decided nothing. So whether to
+    build a Realtime client **waits on the user**. The
     daemon's `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through
@@ -267,8 +273,20 @@ tag (see [release.md](release.md)).
     marks the handle offline while another still runs, and Stop's
     "already told" mark is per handle. Count sessions in arcana-core's
     `/presence`.
-- **Open (@ipck's draft, the user hasn't settled it): message ids and
-  `Re:`.** The id is the 8-hex hash of sender, outbound name and message;
+- **Approved (the user, 2026-10-17, as relayed by @ipck; not yet
+  confirmed with the user directly): message ids and `Re:`.** In dot.ai
+  `4cd293b` (committed, not pushed); dot-ai-mail 0.2.0 carries `Re:` and
+  writes `Id:` on sent copies
+  (`mail/received/20261017-224212Z-@ipck--ids-and-re-settled-fad11167.md`).
+  Two changes to Arcana's proposal below: compute the id for every
+  message `arcana_deliver` sends from the project's handle, from its
+  `sent/` name, or the name it would have where there's no `mail/sent/`;
+  the correlation id's first 8 only for a message that arrives without
+  an id. And a message without a subject is named `<time>-<address>.md`,
+  not with the correlation id as its topic. **Next (Arcana's):** build
+  it in arcana-core and arcana, then tell @ipck the version, which
+  updates `references/arcana.md`. The original draft:
+  The id is the 8-hex hash of sender, outbound name and message;
   a reply carries `Re: <id>` or `Re: #topic:seq`. Arcana's answer (sent):
   carry `id` and `re` as optional envelope headers in arcana-core.
   `arcana_deliver` picks the sent name first, computes the id and files

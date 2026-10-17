@@ -3,8 +3,8 @@
 *Updated 2026-10-17*
 
 Released: arcana 0.35.5 (`b1bd0b4`, 2026-10-17), arcana-core 0.19.0
-(`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed: arcana 0.35.4 (the
-daemon restarted on it); 0.35.5 waits for `just install-pkg`.
+(`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed: arcana 0.35.5 (the
+daemon restarted on it, 2026-10-17).
 Sessions started before an install keep the old MCP bridge until they
 restart.
 All three are tagged with GitHub releases; arcana's packages build from the

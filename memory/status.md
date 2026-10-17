@@ -114,15 +114,25 @@ tag (see [release.md](release.md)).
       2026-10-23) to gpt-image-2.5-sunburst. Overlore draws through
       mj:camera, so it's unaffected unless its opt-in OpenAI backend is
       chosen (the user will settle that).
-    - **Waiting on @mj: ElevenLabs.** Its API price page (2026-10-13)
-      lists one rate per model for every plan: $0.08/1K characters for
-      eleven_v4, eleven_v3, eleven_multilingual_v2; $0.04 for
-      eleven_v4_turbo, eleven_v3_conversational, Flash/Turbo. The
-      `character-cost` header's unit is undocumented (characters or
-      credits; Flash is half a credit per character), so it can't be
-      priced until one call is checked. Asked @mj (no ElevenLabs key
-      here). Sound effects stay unpriced: the docs say both $0.12 a minute
-      and "billed per generation".
+    - **Open (Arcana's call): ElevenLabs speech reports the credits it
+      was charged.** Its API price page (2026-10-13) lists one rate per
+      model for every plan: $0.08/1K characters for eleven_v4, eleven_v3,
+      eleven_multilingual_v2; $0.04 for eleven_v4_turbo,
+      eleven_v3_conversational, Flash/Turbo. @mj checked the
+      `character-cost` header (2026-10-17,
+      `mail/received/20261017-195901Z-@mj--elevenlabs-credits-header-470b932e.md`):
+      it is **credits**, and not one per character. A 30-character
+      eleven_v3 line was charged 12 (0.4 a character), so counting
+      characters overstates it. `TTS::ElevenLabs` drops the header and
+      `TTS::Result` has nowhere to put it; `Usage` has no credits
+      category either, so the shape is ours to pick. Until then mj:voice
+      subclasses `ElevenLabs#post_api` (private) to read it, and wants to
+      drop that; mj is on arcana-ai 0.3.0 and will move up for it.
+      Overlore calls arcana-ai's speech directly and gains too. Still
+      unknown: how credits map to dollars. Sound effects stay unpriced:
+      the docs say both $0.12 a minute and "billed per generation". Eleven
+      Music (mj:voice calls it directly; arcana-ai has no music provider)
+      has sent no cost header so far.
     - **Released in arcana 0.35.1 (`45e08c7`, 2026-10-14):** the
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or
@@ -154,8 +164,9 @@ tag (see [release.md](release.md)).
     arcana-ai; their answers decide whether to build one. **@overlore:
     no** (the user decided 2026-10-13 that Overlore moves all its speech
     to ElevenLabs through mj:voice; it now prices speech and pictures
-    with arcana-ai 0.5.2, and wants ElevenLabs prices once @mj's check
-    settles `character-cost`). Waiting on @mj, @onboard, soaip. The
+    with arcana-ai 0.5.2, and wants ElevenLabs prices; @mj found
+    2026-10-17 that `character-cost` is credits, see above). Waiting on
+    @mj, @onboard, soaip. The
     daemon's `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through

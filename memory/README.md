@@ -17,6 +17,7 @@ working on the code needs belongs in the project's own docs, not here.
 | [status.md](status.md) | Released versions and the open items: pricing upkeep and TTS pricing, TTS default, retiring superseded toolsets |
 | [coordination.md](coordination.md) | This project's handle (`@arcana`), arcana-ai's consumers, and the peers on the bus |
 | [services.md](services.md) | Who supplies services: owners, not the daemon; what's decided and what's still open |
+| [layout.md](layout.md) | One project, three repositories: the folder whose `.ai` links to arcana's, how to set it up, and portability work for later |
 | [registration.md](registration.md) | Handles, owner tokens, presence and the session hooks (0.32.0) |
 | [release.md](release.md) | How releases are cut, in which order, and the packaging-from-the-tag gotcha |
 | [topics.md](topics.md) | Shared-log topics: built (arcana-core 0.19.0, arcana 0.35.2), and what is still deferred |

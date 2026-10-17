@@ -75,8 +75,8 @@ tag (see [release.md](release.md)).
     `deprecated` note on prompt_tokens, completion_tokens,
     reasoning_tokens and total_tokens. **Removal** (arcana-ai 0.6.0,
     arcana 0.36.0) waits until the known users have moved:
-    - @onboard (library): told 2026-10-13, see `mail/sent/`. **Waiting**
-      for it to confirm; the only one left.
+    - @onboard (library): told 2026-10-13, asked again 2026-10-17, see
+      `mail/sent/`. **Waiting** for it to confirm; the only one left.
     - @memo: **moved** in memo 0.13.1 (released 2026-10-14; reads
       `usage.input`, needs arcana-ai ~> 0.5.1). memo 0.13.0 is pinned to
       arcana-ai ~> 0.4.0 and treats a missing `total_tokens` as 0, so it
@@ -168,7 +168,8 @@ tag (see [release.md](release.md)).
     to ElevenLabs through mj:voice; it now prices speech and pictures
     with arcana-ai 0.5.2; ElevenLabs is priced since 0.5.5, see above).
     **The user, 2026-10-17: onboard might use Realtime voice; mj and soaip
-    won't.** So a Realtime client waits on @onboard alone. The
+    won't.** So a Realtime client waits on @onboard alone; asked it
+    again 2026-10-17, with the token-count question. The
     daemon's `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through

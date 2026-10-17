@@ -6,3 +6,7 @@ description: >       # what this project's agent does, shown to other agents
   daemon, its MCP bridge and session hooks, and the shards arcana-core
   (bus mechanics) and arcana-ai (AI provider clients). Ask it about the
   bus, registration, or arcana-ai features and bugs.
+repos:               # the project's repositories, cloned beside .ai/ (not yet in the dot-ai spec)
+  arcana: git@github.com:trans/arcana.git
+  arcana-core: git@github.com:trans/arcana-core.git
+  arcana-ai: git@github.com:trans/arcana-ai.git

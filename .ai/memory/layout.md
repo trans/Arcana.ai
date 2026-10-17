@@ -1,114 +1,79 @@
-# Layout: one project, three repositories
+# Layout: one project, four repositories
 
 *Updated 2026-10-17*
 
-arcana, arcana-core and arcana-ai are separate repositories but one
-project, `@arcana` (the user, 2026-10-17). On a machine that has all
-three, they sit in a plain folder, not itself a repository. The folder's
-`.ai` is a symbolic link to the arcana repository's `.ai/`:
+arcana, arcana-core and arcana-ai are separate repositories, since a
+Crystal shard needs one of its own, but one project, `@arcana` (the user,
+2026-10-17). The project has a fourth repository, `trans/Arcana.ai`, that
+holds none of the code (the user, 2026-10-17; the capital sets it apart
+from a code repository). It holds `.ai/`, committed on its `main`, a
+README, and a `.gitignore` naming the other three. Its clone is the
+project folder, and the three code repositories are clones inside it:
 
 ```
-Arcana/              plain folder (on this machine, ~/Projects/Arcana)
-  .ai -> arcana/.ai  relative link, made by hand on each machine
-  arcana/            the arcana repository; its .ai/ is the `ai` branch's worktree
-  arcana-ai/
+Arcana/              clone of trans/Arcana.ai (on this machine, ~/Projects/Arcana)
+  .ai/               notes, mail, config.yml
+  arcana/            its own clone, ignored by Arcana.ai
   arcana-core/
+  arcana-ai/
 ```
 
 A session in any of the three, or in the folder itself, walks up to the
-nearest `.ai` and finds `@arcana`'s. Arcana does this from 0.35.5
-(`1cb0528`, `93c2140`), and dot-ai-mail walks the same way. The arcana
-repository stays self-contained: a lone clone anywhere works as before,
-with `git worktree add .ai ai`. The folder depends on the repository,
-never the other way round.
+nearest `.ai/` and finds `@arcana`'s. Arcana does this from 0.35.5
+(`1cb0528`), and dot-ai-mail walks the same way. Git for the notes works
+from anywhere in the folder: `git -C .ai ...` from the folder,
+`git -C ../.ai ...` from a code repository. Push with `git -C .ai push`.
 
-**Why a link and not a setting in a real `.ai/`:** with a link, everything
-that reads `.ai/` sees the real folder with no new code: agents reading
-notes, git, mail, the owner token, transcripts. A setting would need every
-tool to learn it first. Until then, dot-ai-mail would see a second
-`@arcana` and stop delivering to either.
+**History.** Until 2026-10-17 the notes were the orphan `ai` branch of
+`trans/arcana`, checked out as a worktree at `arcana/.ai`. Its 42 commits
+are `Arcana.ai`'s history, followed by one that moves them into `.ai/`, so
+`git log --follow` still traces each note. For a few hours that day the
+folder was plain and its `.ai` linked to `arcana/.ai`. The user didn't
+want one code repository holding the notes of all three, so the link gave
+way to this. The `ai` branch stays on `trans/arcana` until the user says
+to delete it; nothing reads it now.
 
-**Checked 2026-10-17** on a copy of the layout:
-- dot-ai-mail finds `@arcana` once. Its search lists directories named
-  `.ai`, not links.
-- It sends from a sub-repository through the link and files the message
-  in the real `sent/`.
-- Arcana resolves every session in the folder to `@arcana`, with the same
-  token and inbox.
+**Why not git submodules:** a submodule fixes a child at one commit, and
+the parent needs a commit each time the child moves. These three move on
+their own `main`s, and `shard.lock` already fixes the versions they build
+against.
 
-## Setting it up
+## Setting up on a machine
 
-The worktree already uses relative paths (done 2026-10-17:
-`git config worktree.useRelativePaths true`, then
-`git worktree repair --relative-paths`). The repository can therefore move
-with its `.ai/` inside it, and nothing needs repairing.
+```sh
+git clone git@github.com:trans/Arcana.ai.git Arcana
+cd Arcana
+git clone git@github.com:trans/arcana.git
+git clone git@github.com:trans/arcana-core.git
+git clone git@github.com:trans/arcana-ai.git
+```
 
-1. Close every Claude Code and Codex session in the three repositories.
-2. Move them into the folder and make the link:
-   ```sh
-   mkdir ~/Projects/Arcana
-   mv ~/Projects/arcana ~/Projects/arcana-core ~/Projects/arcana-ai ~/Projects/Arcana/
-   cd ~/Projects/Arcana
-   ln -s arcana/.ai .ai
-   ```
-   On a filesystem that ignores case (macOS, Windows), `Arcana` and
-   `arcana` clash, so the `mkdir` fails while the repository is still in
-   `~/Projects`. Move the repository to a temporary name first.
-3. Check:
-   ```sh
-   git -C ~/Projects/Arcana/arcana worktree list  # .ai at its new place, not "prunable"
-   git -C ~/Projects/Arcana/.ai status            # works through the link
-   ```
-   From `~/Projects/Arcana/arcana-core`, the plugin's
-   `dot-ai-mail find @arcana` should print `~/Projects/Arcana/arcana`.
-4. Claude Code files a session's memory and history under the folder it
-   starts in: `~/.claude/projects/`, with `/` turned into `-` in the path.
-   Most of this project's memory is here in `.ai/memory/`, so little
-   depends on it. To keep the rest (how the user likes to work, private
-   notes, session history), rename the old folder (ending
-   `-Projects-arcana`) to end `-Projects-Arcana-arcana`. Then keep starting
-   Arcana's sessions in the repository, where its
-   `.claude/settings.local.json` applies. Claude Code asks once to trust
-   the new path.
-5. Until arcana 0.35.5 is installed, a session started in arcana-core or
-   arcana-ai still registers a fallback handle of its own. Sessions in the
-   repository or in the folder are `@arcana` either way.
+The three are listed under `repos:` in `../config.yml`. **Planned (Arcana's
+call):** the session-start hook clones the missing ones, so cloning
+`Arcana.ai` and starting a session is enough.
 
-## If the link breaks
+Claude Code files a session's memory under the folder it starts in, so
+sessions started in the folder and in `arcana/` keep separate memory unless
+the machine links them. Start in `arcana/` to have its
+`.claude/settings.local.json` apply.
 
-If the arcana repository is renamed or moved out of the folder, the link
-leads nowhere. The walk passes over it, so sessions in arcana-core land in
-the project above (`@projects`). Since 0.35.5 (`93c2140`), session start
-warns the agent when this happens. To fix it, remake the link in the
-folder: `ln -sfn arcana/.ai .ai`.
+## Off the dot-ai spec
 
-## Portability: what may need doing later
+- The spec has `.ai/` as a worktree of the project repository's orphan
+  `ai` branch. Here `.ai/` is committed on `main` of a repository of its
+  own, and `repos:` is a key the spec doesn't have. Both are @ipck's to
+  take into the spec; a proposal goes once the clone step is built and has
+  been used. It may also answer the open question of overseer folders like
+  `~/Projects` (see [status.md](status.md)).
+- dot-ai-mail finds `@arcana` once: it searches for directories named
+  `.ai`, and there is one.
 
-- **Other machines and cloud sessions.** The folder and the link are made
-  by hand on each machine; no repository records them. Another machine
-  needs the same steps, or works from a lone arcana clone. A cloud session
-  that clones only arcana-core is a project of its own, with a fallback
-  handle. If that happens often, there are two fixes:
-  - a setup command (a `just` recipe, or one in dot-ai) that clones the
-    three and makes the link;
-  - a committed pointer in arcana-core and arcana-ai naming their project.
-- **Windows.** Symbolic links need Developer Mode or admin rights, and
-  dot-ai-mail is POSIX sh. A directory junction (`mklink /J .ai arcana\.ai`)
-  might serve; that's untested. Where no link can be made, the fallback is
-  a pointer setting: a config key, or an `.ai` file naming the project's
-  `.ai/`, like git's `.git` file. Every tool (Arcana, dot-ai-mail, Copious,
-  the dot-ai skill) would have to learn it, so the spec would change first.
-- **Relative worktrees** set `extensions.relativeWorktrees` in this clone's
-  `.git/config`. Git before 2.48, and tools built on libgit2 or JGit (some
-  editors and git GUIs), may refuse to open the repository. This affects
-  only this clone; `.git/config` isn't pushed. To undo it, repair the
-  worktree with absolute paths and remove the extension.
-- **The spec.** dot-ai-mail skips the link because `find -type d` doesn't
-  match links, not because the spec says it should. @ipck has been asked
-  (2026-10-17) to write it into the spec, so that other implementations,
-  such as Copious, do the same.
-- **One project, two paths.** The folder and the repository both resolve to
-  `@arcana`. Arcana and dot-ai-mail key nothing on the path, but a tool that
-  did would see two projects.
-- **Sessions sharing `@arcana`** become more likely, so presence should
-  count sessions (see [status.md](status.md)).
+## Portability
+
+- **A code repository on its own**, outside the folder or in a cloud
+  session that clones only arcana-core, has no `.ai/` above it. Its
+  sessions land in the project above (`@projects` here) or get a fallback
+  handle. Cloning `Arcana.ai` first avoids it.
+- **Windows** needs no link any more. dot-ai-mail is still POSIX sh.
+- **Sessions sharing `@arcana`** are more likely with four places to start,
+  so presence should count sessions (see [status.md](status.md)).

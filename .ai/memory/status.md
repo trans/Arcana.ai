@@ -245,13 +245,15 @@ tag (see [release.md](release.md)).
   directories without `.ai/` (`@pirateship`, `@tabcomputing-com` on
   2026-10-17) stop being refreshed and expire.
   - **Decided (the user, 2026-10-17): arcana, arcana-core and arcana-ai
-    are one project.** They share a plain folder whose `.ai` links to
-    arcana's `.ai/` (a link, not a setting; `~/Projects/Arcana/` on this
-    machine), so a session in any of them is
-    `@arcana`. The worktree uses relative paths now. Session start warns
-    of a broken link (`93c2140`). The move itself waits for the user, with
-    no sessions open in the three. Steps and later portability work:
-    [layout.md](layout.md).
+    are one project, and its notes have a repository of their own,
+    `trans/Arcana.ai`.** Its clone is the folder the three are cloned in
+    (`~/Projects/Arcana/` on this machine), so a session in any of them
+    is `@arcana`. Done 2026-10-17: the `ai` branch's history moved into
+    `Arcana.ai`'s `main`, the worktree at `arcana/.ai` and the folder's
+    link are gone. **Next (Arcana's call):** the session-start hook
+    clones the repositories under `repos:` in `config.yml` that are
+    missing; then propose `repos:` and a `.ai/` on `main` to @ipck for
+    the spec. Details: [layout.md](layout.md).
   - **Open (the user, undecided 2026-10-17): overseer folders like
     `~/Projects`** have an `.ai/` but no repository, so their mail and
     notes exist on one disk only. Option: make that `.ai/` its own

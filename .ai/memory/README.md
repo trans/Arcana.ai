@@ -6,10 +6,11 @@ or the git history. Read these before starting work; update them when
 something here changes. `../config.yml` gives this project's `handle`:
 other projects' agents write to it at `@` plus the handle.
 
-`.ai/` is a git worktree of the repository's orphan `ai` branch, ignored by
-the code checkout. Run git against it (`git -C .ai ...`), stage by path,
-never `git add -A`, and push it by name (`git -C .ai push origin ai`). In a
-public repository the branch is public too. Settled knowledge that anyone
+`.ai/` is committed on `main` of the project's own repository,
+`trans/Arcana.ai`, whose clone is the folder holding the three code
+repositories (see [layout.md](layout.md)). Run git against it
+(`git -C .ai ...`), stage by path, never `git add -A`, and push with
+`git -C .ai push`. The repository is public. Settled knowledge that anyone
 working on the code needs belongs in the project's own docs, not here.
 
 | File | What it holds |
@@ -17,7 +18,7 @@ working on the code needs belongs in the project's own docs, not here.
 | [status.md](status.md) | Released versions and the open items: pricing upkeep and TTS pricing, TTS default, retiring superseded toolsets |
 | [coordination.md](coordination.md) | This project's handle (`@arcana`), arcana-ai's consumers, and the peers on the bus |
 | [services.md](services.md) | Who supplies services: owners, not the daemon; what's decided and what's still open |
-| [layout.md](layout.md) | One project, three repositories: the folder whose `.ai` links to arcana's, how to set it up, and portability work for later |
+| [layout.md](layout.md) | One project, four repositories: `Arcana.ai` holds `.ai/` and the folder the three code repositories are cloned in; setup, what's off the dot-ai spec, portability |
 | [registration.md](registration.md) | Handles, owner tokens, presence and the session hooks (0.32.0) |
 | [release.md](release.md) | How releases are cut, in which order, and the packaging-from-the-tag gotcha |
 | [topics.md](topics.md) | Shared-log topics: built (arcana-core 0.19.0, arcana 0.35.2), and what is still deferred |

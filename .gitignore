@@ -1,0 +1,4 @@
+# The project's repositories, each a clone of its own (see .ai/config.yml, repos:)
+/arcana/
+/arcana-core/
+/arcana-ai/

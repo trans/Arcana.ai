@@ -3,7 +3,7 @@
 *Updated 2026-10-17*
 
 Released: arcana 0.35.5 (`b1bd0b4`, 2026-10-17), arcana-core 0.19.0
-(`c762da7`), arcana-ai 0.5.4 (`675290d`, 2026-10-17). Installed: arcana 0.35.5 (the
+(`c762da7`), arcana-ai 0.5.5 (`2d9b1dc`, 2026-10-17). Installed: arcana 0.35.5 (the
 daemon restarted on it, 2026-10-17).
 Sessions started before an install keep the old MCP bridge until they
 restart.
@@ -114,26 +114,27 @@ tag (see [release.md](release.md)).
       2026-10-23) to gpt-image-2.5-sunburst. Overlore draws through
       mj:camera, so it's unaffected unless its opt-in OpenAI backend is
       chosen (the user will settle that).
-    - **Released in arcana-ai 0.5.4 (`ec9a340`, 2026-10-17): ElevenLabs
-      speech reports the credits it was charged**, read from the
-      `character-cost` header into `Usage#credits`, synthesized or
-      streamed. @mj found the header is credits, not characters
-      (`mail/received/20261017-195901Z-@mj--elevenlabs-credits-header-470b932e.md`):
-      a 30-character eleven_v3 line was charged 12, 0.4 a character.
-      `Pricing` prices credits at a `credits` rate (USD per thousand),
-      which only a caller's own table gives. The built-in one has no
-      ElevenLabs rates: what a credit costs depends on the plan, and the
-      API price page (2026-10-13: $0.08/1K characters for eleven_v4,
-      eleven_v3, eleven_multilingual_v2; $0.04 for eleven_v4_turbo,
-      eleven_v3_conversational, Flash/Turbo) quotes characters, which
-      overstates eleven_v3. Also in 0.5.4: stored usage JSON missing a
-      count loads it as zero (anything stored before 0.5.2 used to fail).
-      Told @mj, who can drop mj:voice's `post_api` override (mj is on
-      arcana-ai 0.3.0), and @overlore, which calls arcana-ai's speech
-      directly. Sound effects stay unpriced: the docs say both $0.12 a
-      minute and "billed per generation". Eleven Music (mj:voice calls it
-      directly; arcana-ai has no music provider) has sent no cost header
-      so far.
+    - **Released in arcana-ai 0.5.5 (`3573058`, 2026-10-17): ElevenLabs
+      speech is priced by the characters it bills.** `TTS::ElevenLabs`
+      reads the `character-cost` header (ElevenLabs' docs: the call's
+      character cost) into `Usage#characters`, synthesized or streamed,
+      and the built-in table prices it: ElevenLabs' API page (checked
+      2026-10-17) bills API usage in dollars by the character, one rate per
+      model on every plan, $0.08/1K for eleven_v4, eleven_v3,
+      eleven_multilingual_v2 and $0.04 for eleven_v4_turbo,
+      eleven_v3_conversational, Flash/Turbo. The count can be under the
+      text's length: @mj saw 12 billed for a 30-character eleven_v3 line
+      (`mail/received/20261017-195901Z-@mj--elevenlabs-credits-header-470b932e.md`).
+      0.5.4, an hour earlier, read the header as credits with no built-in
+      rates; the user questioned "depends on the plan", the price page
+      settled it, and 0.5.5 replaced it (0.5.4's release notes say so).
+      Also since 0.5.4: stored usage JSON missing a count loads it as zero.
+      Told @mj and @overlore. **Waiting on @mj:** whether ElevenLabs'
+      usage page counts that call at 12 (the header) or 30 (the text); the
+      price assumes the header. Sound effects stay unpriced: the docs say
+      both $0.12 a minute and "billed per generation". Eleven Music
+      (mj:voice calls it directly; arcana-ai has no music provider) has
+      sent no cost header so far.
     - **Released in arcana 0.35.1 (`45e08c7`, 2026-10-14):** the
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or
@@ -165,9 +166,9 @@ tag (see [release.md](release.md)).
     arcana-ai; their answers decide whether to build one. **@overlore:
     no** (the user decided 2026-10-13 that Overlore moves all its speech
     to ElevenLabs through mj:voice; it now prices speech and pictures
-    with arcana-ai 0.5.2, and wants ElevenLabs prices; @mj found
-    2026-10-17 that `character-cost` is credits, see above). Waiting on
-    @mj, @onboard, soaip. The
+    with arcana-ai 0.5.2; ElevenLabs is priced since 0.5.5, see above).
+    **The user, 2026-10-17: onboard might use Realtime voice; mj and soaip
+    won't.** So a Realtime client waits on @onboard alone. The
     daemon's `openai` tts tool stops too.
   - **Upkeep:** the table needs updating when providers change prices.
     Known dates: gpt-5.6-sol's promotional rate is promised only through

@@ -30,8 +30,8 @@ are `Arcana.ai`'s history, followed by one that moves them into `.ai/`, so
 `git log --follow` still traces each note. For a few hours that day the
 folder was plain and its `.ai` linked to `arcana/.ai`. The user didn't
 want one code repository holding the notes of all three, so the link gave
-way to this. The `ai` branch stays on `trans/arcana` until the user says
-to delete it; nothing reads it now.
+way to this. The `ai` branch was deleted from `trans/arcana` the same day
+(the user's go-ahead), after checking both its copies were in `Arcana.ai`.
 
 **Why not git submodules:** a submodule fixes a child at one commit, and
 the parent needs a commit each time the child moves. These three move on

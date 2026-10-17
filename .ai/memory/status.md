@@ -250,10 +250,10 @@ tag (see [release.md](release.md)).
     (`~/Projects/Arcana/` on this machine), so a session in any of them
     is `@arcana`. Done 2026-10-17: the `ai` branch's history moved into
     `Arcana.ai`'s `main`, the worktree at `arcana/.ai` and the folder's
-    link are gone. **Next (Arcana's call):** the session-start hook
-    clones the repositories under `repos:` in `config.yml` that are
-    missing; then propose `repos:` and a `.ai/` on `main` to @ipck for
-    the spec. Details: [layout.md](layout.md).
+    link are gone. Told @ipck the same day: the link request is
+    withdrawn, and `.ai/` on `main` and `repos:` are proposed for the
+    spec. **Open (the user, 2026-10-17):** whether cloning what `repos:`
+    lists should be automatic. Details: [layout.md](layout.md).
   - **Open (the user, undecided 2026-10-17): overseer folders like
     `~/Projects`** have an `.ai/` but no repository, so their mail and
     notes exist on one disk only. Option: make that `.ai/` its own

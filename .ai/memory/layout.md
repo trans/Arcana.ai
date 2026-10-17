@@ -48,9 +48,10 @@ git clone git@github.com:trans/arcana-core.git
 git clone git@github.com:trans/arcana-ai.git
 ```
 
-The three are listed under `repos:` in `../config.yml`. **Planned (Arcana's
-call):** the session-start hook clones the missing ones, so cloning
-`Arcana.ai` and starting a session is enough.
+The three are listed under `repos:` in `../config.yml`. **Open (the user,
+2026-10-17): whether cloning them should be automatic.** Arcana's
+session-start hook could clone what's missing; or an agent offers to, as
+the dot-ai skill has it offer to check out the `ai` branch, with no code.
 
 Claude Code files a session's memory under the folder it starts in, so
 sessions started in the folder and in `arcana/` keep separate memory unless
@@ -62,11 +63,13 @@ the machine links them. Start in `arcana/` to have its
 - The spec has `.ai/` as a worktree of the project repository's orphan
   `ai` branch. Here `.ai/` is committed on `main` of a repository of its
   own, and `repos:` is a key the spec doesn't have. Both are for the
-  spec (the user's, with @ipck), once they've been used a while. A note
-  to @ipck withdrawing this morning's request to spec the link, and
-  describing both, is drafted and held for the user (2026-10-17). It may
-  also answer the open question of overseer folders like `~/Projects`
-  (see [status.md](status.md)).
+  spec (the user's, with @ipck), once they've been used a while. Sent to
+  @ipck 2026-10-17
+  (`mail/sent/20261017-202708Z-@ipck--the-folder-is-its-own-repository.md`):
+  this morning's request to spec the link is withdrawn, both are
+  described, and who clones is left open. It may also answer the open
+  question of overseer folders like `~/Projects` (see
+  [status.md](status.md)).
 - dot-ai-mail finds `@arcana` once: it searches for directories named
   `.ai`, and there is one.
 

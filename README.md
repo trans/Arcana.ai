@@ -28,6 +28,4 @@ git clone git@github.com:trans/arcana-core.git
 git clone git@github.com:trans/arcana-ai.git
 ```
 
-The repositories are listed under `repos:` in `.ai/config.yml`. Arcana's
-session-start hook will clone the missing ones itself; until it does,
-clone them by hand as above.
+The repositories are listed under `repos:` in `.ai/config.yml`.

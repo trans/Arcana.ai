@@ -1,11 +1,12 @@
 # Status
 
-*Updated 2026-10-16*
+*Updated 2026-10-17*
 
 Released: arcana 0.35.4 (`b4b461a`, 2026-10-14, with 0.35.1–0.35.3),
 arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
-arcana 0.35.4 (the daemon restarted on it). Committed and tagged, not
-pushed: arcana 0.35.5 (`48a6ce1`, the drain).
+arcana 0.35.4 (the daemon restarted on it). Committed, not tagged or
+pushed: arcana 0.35.5 (`833ff09`: `arcana_deliver` files the sent copy,
+and the Stop fix).
 Sessions started before an install keep the old MCP bridge until they
 restart.
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -196,26 +197,52 @@ tag (see [release.md](release.md)).
   the skill (`dot-ai:dot-ai` in Claude Code) plus hooks that run
   dot-ai-mail 0.1.0 at session start, Stop and session end. The user
   installed it on 2026-10-16 (@ipck's mail, `mail/received/`).
-- **Withdrawn (2026-10-16): `arcana hook drain`**, built in `3de6471`
-  (0.35.5, tagged locally, not pushed). The user meant dot-ai-mail as
-  light mail for one machine without Arcana, so it never calls Arcana,
-  and the drain has no caller. It came from Arcana's own one-voice idea
-  (2026-10-14). @ipck's note said the user had asked for it, and Arcana
-  built it without checking with the user. Each tool keeps announcing
-  its own place. Not shipping it means rewinding the local commits;
-  `3de6471` also has a fix worth keeping (Stop nudges once per change in
-  the count). That waits on the user.
-- **Open (the user is undecided, 2026-10-16): does mail need a committed
-  record?** Mail files do two jobs: a queue (the inbox, for agents that
-  aren't running and for `.ai/` without Arcana) and a record (`sent/` and
-  `received/`, from @ipck's provenance concern). Arcana's view: where
-  transcripts are committed, the record is a second copy. But today only
-  Copious commits transcripts, and redaction can change a message. So
-  keep the queue, and let transcripts and notes be the record. A cloud
-  harness would then need no mail files: Arcana delivers, holds mail for
-  offline agents, and lists who exists. Also floated, not decided:
-  `arcana_deliver` writing the `sent/` copy itself. Summary sent to @ipck
-  (`mail/sent/`).
+- **Removed (2026-10-17): `arcana hook drain`.** The user meant
+  dot-ai-mail as light mail for one machine without Arcana, so it never
+  calls Arcana, and the drain had no caller. It came from Arcana's own
+  one-voice idea (2026-10-14); @ipck's note said the user had asked for
+  it, and Arcana built it without checking. Each tool announces its own
+  place. Main was rewound to 0.35.4 (the drain was never pushed), and its
+  one fix worth keeping went back in on its own: Stop nudges once per
+  change in the count (`fc4a853`).
+- **Decided (2026-10-17): mail keeps its record.** `sent/` and
+  `received/` stay, on @ipck's case, which the user agreed with. For
+  most sessions they're the only copy (Claude Code and Codex don't commit
+  transcripts). They hold one message per file, word for word, and
+  record both sides of what two projects said. In Copious there's no
+  duplication: a transcript keeps a pinned view's path, not the file's
+  text. An agent without a checkout needs no mail files; Arcana carries
+  the mail.
+- **Built (2026-10-17), not released: `arcana_deliver` files the sender's
+  copy** (the user decided, 2026-10-17; `0521bc2`, 0.35.5). It's the
+  mirror of `arcana_receive` writing the inbox file. Each message from
+  the project's own handle to an agent that the bus took goes into
+  `.ai/mail/sent/` as `<time>-<recipient>--<topic>.md` with `Sent: <time>
+  via arcana`, named in `sent_file`. Without a subject, the topic is the
+  correlation id's first 8; a clash in one second gets `-2`. Services,
+  other senders, failed deliveries and projects without `mail/sent/` get
+  no copy. Still open: an outbox message dot-ai-mail can't deliver (its
+  recipient isn't on this machine) gets a second copy under a new name
+  when the agent sends it by hand. Sending the file itself (`arcana send
+  FILE`) would fix that; not built.
+- **Open (for the user): should Arcana find the project by walking up to
+  the nearest `.ai/`?** The user decided (2026-10-17) that for dot-ai a
+  directory without `.ai/` belongs to the project above it (dot.ai
+  `de268ee`). Arcana's hooks and bridge take the session's directory as
+  the project, so sessions in arcana-core and arcana-ai register fallback
+  handles of their own. Arcana's view (sent to @ipck): follow the walk,
+  and count sessions per handle for presence. Today the first session to
+  end marks a shared handle offline, and Stop's "already told" mark is
+  per handle.
+- **Open (@ipck's draft, the user hasn't settled it): message ids and
+  `Re:`.** The id is the 8-hex hash of sender, outbound name and message;
+  a reply carries `Re: <id>` or `Re: #topic:seq`. Arcana's answer (sent):
+  carry `id` and `re` as optional envelope headers in arcana-core.
+  `arcana_deliver` picks the sent name first, computes the id and files
+  the copy with `Id:`. Inbox files use the carried id, falling back to
+  the correlation id's first 8. Add `re` to deliver and publish.
+  `#topic:seq` is fine (topic names have no `:`), but retention can drop
+  the post a `Re:` names.
 - Snail mail (files between projects' `.ai/mail/` folders) is a local
   fallback, **not a replacement for Arcana's messaging**, which stays
   the main way agents talk (the user, 2026-10-13).

@@ -238,7 +238,8 @@ tag (see [release.md](release.md)).
   2026-10-17) stop being refreshed and expire.
   - **Decided (the user, 2026-10-17): arcana, arcana-core and arcana-ai
     are one project.** They share a plain folder whose `.ai` links to
-    arcana's `.ai/` (a link, not a setting), so a session in any of them is
+    arcana's `.ai/` (a link, not a setting; `~/Projects/Arcana/` on this
+    machine), so a session in any of them is
     `@arcana`. The worktree uses relative paths now. Session start warns
     of a broken link (`93c2140`). The move itself waits for the user, with
     no sessions open in the three. Steps and later portability work:

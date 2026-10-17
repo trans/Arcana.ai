@@ -8,7 +8,7 @@ three, they sit in a plain folder, not itself a repository. The folder's
 `.ai` is a symbolic link to the arcana repository's `.ai/`:
 
 ```
-arcana/              plain folder
+Arcana/              plain folder (on this machine, ~/Projects/Arcana)
   .ai -> arcana/.ai  relative link, made by hand on each machine
   arcana/            the arcana repository; its .ai/ is the `ai` branch's worktree
   arcana-ai/
@@ -46,27 +46,30 @@ with its `.ai/` inside it, and nothing needs repairing.
 1. Close every Claude Code and Codex session in the three repositories.
 2. Move them into the folder and make the link:
    ```sh
-   cd ~/Projects
-   mv arcana arcana.tmp
-   mkdir arcana
-   mv arcana.tmp arcana/arcana
-   mv arcana-core arcana-ai arcana/
-   cd arcana
+   mkdir ~/Projects/Arcana
+   mv ~/Projects/arcana ~/Projects/arcana-core ~/Projects/arcana-ai ~/Projects/Arcana/
+   cd ~/Projects/Arcana
    ln -s arcana/.ai .ai
    ```
+   On a filesystem that ignores case (macOS, Windows), `Arcana` and
+   `arcana` clash, so the `mkdir` fails while the repository is still in
+   `~/Projects`. Move the repository to a temporary name first.
 3. Check:
    ```sh
-   git -C ~/Projects/arcana/arcana worktree list  # .ai at its new place, not "prunable"
-   git -C ~/Projects/arcana/.ai status            # works through the link
+   git -C ~/Projects/Arcana/arcana worktree list  # .ai at its new place, not "prunable"
+   git -C ~/Projects/Arcana/.ai status            # works through the link
    ```
-   From `~/Projects/arcana/arcana-core`, the plugin's
-   `dot-ai-mail find @arcana` should print `~/Projects/arcana/arcana`.
+   From `~/Projects/Arcana/arcana-core`, the plugin's
+   `dot-ai-mail find @arcana` should print `~/Projects/Arcana/arcana`.
 4. Claude Code files a session's memory and history under the folder it
    starts in: `~/.claude/projects/`, with `/` turned into `-` in the path.
-   Keep starting Arcana's sessions in the repository, where its
-   `.claude/settings.local.json` applies. For that, rename the old folder
-   (ending `-Projects-arcana`) to end `-Projects-arcana-arcana`. Claude Code
-   asks once to trust the new path.
+   Most of this project's memory is here in `.ai/memory/`, so little
+   depends on it. To keep the rest (how the user likes to work, private
+   notes, session history), rename the old folder (ending
+   `-Projects-arcana`) to end `-Projects-Arcana-arcana`. Then keep starting
+   Arcana's sessions in the repository, where its
+   `.claude/settings.local.json` applies. Claude Code asks once to trust
+   the new path.
 5. Until arcana 0.35.5 is installed, a session started in arcana-core or
    arcana-ai still registers a fallback handle of its own. Sessions in the
    repository or in the folder are `@arcana` either way.

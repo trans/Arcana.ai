@@ -2,9 +2,10 @@
 
 *Updated 2026-10-17*
 
-Released: arcana 0.35.5 (`b1bd0b4`, 2026-10-17), arcana-core 0.19.0
-(`c762da7`), arcana-ai 0.5.5 (`2d9b1dc`, 2026-10-17). Installed: arcana 0.35.5 (the
-daemon restarted on it, 2026-10-17).
+Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
+(`84e52e3`), arcana-ai 0.6.0 (`f6fa467`). Installed: arcana 0.35.5 (the
+daemon restarted on it, 2026-10-17); **0.36.0 waits for the user to
+install it** (`just install-pkg`).
 Sessions started before an install keep the old MCP bridge until they
 restart.
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -73,9 +74,12 @@ tag (see [release.md](release.md)).
     `cache_read_tokens`, `cache_creation_tokens`, `reasoning_tokens` and
     `Embed::Result#total_tokens`; arcana 0.35.0's replies carry a
     `deprecated` note on prompt_tokens, completion_tokens,
-    reasoning_tokens and total_tokens. **Removal** (arcana-ai 0.6.0,
-    arcana 0.36.0) waited until the known users had moved. **All have,
-    as of 2026-10-17, so it can go ahead:**
+    reasoning_tokens and total_tokens. **Removed in arcana-ai 0.6.0
+    (`4bf7053`) and arcana 0.36.0 (`65bbaf3`), 2026-10-17, at the user's
+    word**, once every known user had moved (0.6.0 also made an image's
+    plain `cost` the `Cost | Unpriced`, dropping the Float64). Overlore
+    builds against the arcana-ai working tree by path, so it got 0.6.0
+    at once; it type-checked clean. The users:
     - @onboard (library): **moved** in its working tree (2026-10-17,
       `mail/received/20261017-221344Z-@onboard--onboard-token-usage-status-16ed4cf9.md`):
       it reads `usage` and `cost` on arcana-ai 0.5.1, and nothing in its
@@ -159,8 +163,8 @@ tag (see [release.md](release.md)).
     DeepSeek unchanged. The daemon's openai `max_tokens` default went 150
     → 4096 (`f45a39a`): reasoning counts against it. Only Overlore's
     banter calls OpenAI chat through the library (on gpt-4o-mini, never
-    affected); told @overlore (see `mail/sent/`). **For 0.6.0:** make
-    `Request#temperature` nilable, since an explicit 0.7 can't be told
+    affected); told @overlore (see `mail/sent/`). **For the next breaking
+    release (0.7.0; left out of 0.6.0):** make `Request#temperature` nilable, since an explicit 0.7 can't be told
     from the default (Anthropic's client has the same limit).
   - **OpenAI speech shutdown, 2027-01-06** (deprecations page, entry
     "2026-10-01: Text-to-speech models"): tts-1, tts-1-hd, both
@@ -273,8 +277,16 @@ tag (see [release.md](release.md)).
     marks the handle offline while another still runs, and Stop's
     "already told" mark is per handle. Count sessions in arcana-core's
     `/presence`.
-- **Approved (the user, 2026-10-17, as relayed by @ipck; not yet
-  confirmed with the user directly): message ids and `Re:`.** In dot.ai
+- **Released in arcana 0.36.0 (`5d803dc`) and arcana-core 0.20.0
+  (`2ca0692`), 2026-10-17: message ids and `Re:`** (the user approved,
+  first via @ipck, then directly). `Envelope#id` and `#re`;
+  `arcana_deliver` names the sent copy first, computes the id, carries
+  it, files `Sent:`/`Id:` (and `Re:`), returns `id`; `re` on deliver and
+  publish; inbox files take the carried id. Checked against dot-ai-mail
+  0.2.0: both give `9a6f4ca8` for
+  `mail/sent/20261017-231716Z-@ipck--ids-and-re-in-arcana-0.36.0.md`,
+  which told @ipck the version (its `references/arcana.md` changes
+  next). The approval as @ipck relayed it: in dot.ai
   `4cd293b` (committed, not pushed); dot-ai-mail 0.2.0 carries `Re:` and
   writes `Id:` on sent copies
   (`mail/received/20261017-224212Z-@ipck--ids-and-re-settled-fad11167.md`).
@@ -283,9 +295,7 @@ tag (see [release.md](release.md)).
   `sent/` name, or the name it would have where there's no `mail/sent/`;
   the correlation id's first 8 only for a message that arrives without
   an id. And a message without a subject is named `<time>-<address>.md`,
-  not with the correlation id as its topic. **Next (Arcana's):** build
-  it in arcana-core and arcana, then tell @ipck the version, which
-  updates `references/arcana.md`. The original draft:
+  not with the correlation id as its topic. The original draft:
   The id is the 8-hex hash of sender, outbound name and message;
   a reply carries `Re: <id>` or `Re: #topic:seq`. Arcana's answer (sent):
   carry `id` and `re` as optional envelope headers in arcana-core.

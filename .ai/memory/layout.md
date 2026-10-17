@@ -61,10 +61,12 @@ the machine links them. Start in `arcana/` to have its
 
 - The spec has `.ai/` as a worktree of the project repository's orphan
   `ai` branch. Here `.ai/` is committed on `main` of a repository of its
-  own, and `repos:` is a key the spec doesn't have. Both are @ipck's to
-  take into the spec; a proposal goes once the clone step is built and has
-  been used. It may also answer the open question of overseer folders like
-  `~/Projects` (see [status.md](status.md)).
+  own, and `repos:` is a key the spec doesn't have. Both are for the
+  spec (the user's, with @ipck), once they've been used a while. A note
+  to @ipck withdrawing this morning's request to spec the link, and
+  describing both, is drafted and held for the user (2026-10-17). It may
+  also answer the open question of overseer folders like `~/Projects`
+  (see [status.md](status.md)).
 - dot-ai-mail finds `@arcana` once: it searches for directories named
   `.ai`, and there is one.
 

@@ -48,10 +48,13 @@ git clone git@github.com:trans/arcana-core.git
 git clone git@github.com:trans/arcana-ai.git
 ```
 
-The three are listed under `repos:` in `../config.yml`. **Open (the user,
-2026-10-17): whether cloning them should be automatic.** Arcana's
-session-start hook could clone what's missing; or an agent offers to, as
-the dot-ai skill has it offer to check out the `ai` branch, with no code.
+The three are listed under `repos:` in `../config.yml`. **Decided (the
+user, 2026-10-17): cloning isn't automatic.** An agent that finds one
+missing offers to clone it, as the dot-ai skill has it offer to check out
+the `ai` branch; no hook or code. It happens once a machine, and a hook
+that clones would hit the network and ssh at every session start. Cloud
+sessions, where it would matter, have setup scripts of their own. A line
+for the skill goes to @ipck once `repos:` has been used a while.
 
 Claude Code files a session's memory under the folder it starts in, so
 sessions started in the folder and in `arcana/` keep separate memory unless

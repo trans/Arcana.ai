@@ -252,8 +252,9 @@ tag (see [release.md](release.md)).
     `Arcana.ai`'s `main`, the worktree at `arcana/.ai` and the folder's
     link are gone. Told @ipck the same day: the link request is
     withdrawn, and `.ai/` on `main` and `repos:` are proposed for the
-    spec. **Open (the user, 2026-10-17):** whether cloning what `repos:`
-    lists should be automatic. Details: [layout.md](layout.md).
+    spec. **Decided (the user, 2026-10-17): no automatic cloning;** an
+    agent offers to clone what `repos:` lists and is missing. Details:
+    [layout.md](layout.md).
   - **Open (the user, undecided 2026-10-17): overseer folders like
     `~/Projects`** have an `.ai/` but no repository, so their mail and
     notes exist on one disk only. Option: make that `.ai/` its own

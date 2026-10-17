@@ -5,8 +5,8 @@
 Released: arcana 0.35.4 (`b4b461a`, 2026-10-14, with 0.35.1–0.35.3),
 arcana-core 0.19.0 (`c762da7`), arcana-ai 0.5.3 (`627c638`). Installed:
 arcana 0.35.4 (the daemon restarted on it). Committed, not tagged or
-pushed: arcana 0.35.5 (`833ff09`: `arcana_deliver` files the sent copy,
-and the Stop fix).
+pushed: arcana 0.35.5 (`2740555`: `arcana_deliver` files the sent copy,
+a session's project is the nearest `.ai/`, and the Stop fix).
 Sessions started before an install keep the old MCP bridge until they
 restart.
 All three are tagged with GitHub releases; arcana's packages build from the
@@ -225,15 +225,21 @@ tag (see [release.md](release.md)).
   recipient isn't on this machine) gets a second copy under a new name
   when the agent sends it by hand. Sending the file itself (`arcana send
   FILE`) would fix that; not built.
-- **Open (for the user): should Arcana find the project by walking up to
-  the nearest `.ai/`?** The user decided (2026-10-17) that for dot-ai a
-  directory without `.ai/` belongs to the project above it (dot.ai
-  `de268ee`). Arcana's hooks and bridge take the session's directory as
-  the project, so sessions in arcana-core and arcana-ai register fallback
-  handles of their own. Arcana's view (sent to @ipck): follow the walk,
-  and count sessions per handle for presence. Today the first session to
-  end marks a shared handle offline, and Stop's "already told" mark is
-  per handle.
+- **Decided (the user, 2026-10-17): a session's project is the nearest
+  `.ai/` at or above it**, in Arcana as in dot-ai (dot.ai `de268ee`).
+  With no `.ai/` anywhere above, the session's own directory keeps the
+  fallback handle (`@` plus its name, token under XDG state), so Arcana
+  still works without dot-ai; the user chose that over not registering.
+  **Built in `1cb0528` (0.35.5, not released):** `AgentConfig.project_root`
+  and `find` walk up, resolving symbolic links as dot-ai-mail does, for
+  the hooks and the bridge. The fallback handles registered from
+  directories without `.ai/` (`@pirateship`, `@tabcomputing-com` on
+  2026-10-17) stop being refreshed and expire.
+  - **Open (Arcana's call): presence with several sessions on one
+    handle.** The walk makes it more common. The first session to end
+    marks the handle offline while another still runs, and Stop's
+    "already told" mark is per handle. Count sessions in arcana-core's
+    `/presence`.
 - **Open (@ipck's draft, the user hasn't settled it): message ids and
   `Re:`.** The id is the 8-hex hash of sender, outbound name and message;
   a reply carries `Re: <id>` or `Re: #topic:seq`. Arcana's answer (sent):

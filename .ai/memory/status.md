@@ -137,10 +137,11 @@ tag (see [release.md](release.md)).
       rates; the user questioned "depends on the plan", the price page
       settled it, and 0.5.5 replaced it (0.5.4's release notes say so).
       Also since 0.5.4: stored usage JSON missing a count loads it as zero.
-      Told @mj and @overlore. **@mj moved** (2026-10-19, working tree
-      only, `~> 0.5.5`, not committed: Thomas wants to talk it over with
+      Told @mj and @overlore. **@mj moved** (2026-10-19, `~> 0.5.5`,
+      first in its working tree only: Thomas wanted to talk it over with
       Arcana first, wanting arcana-ai to work out the dollars;
       `mail/received/20261019-192754Z-@mj--re-arcana-ai-0.5.5-mj-has-moved-and-your-12-or-30-7588ca68.md`).
+      The user said go ahead; told @mj to commit (2026-10-19, `c1aa4f49`).
       The `post_api` override is gone; mj:voice reports
       `usage.characters` and `cost` for speech and Eleven Music, but kept
       its own OpenAI speech rates, thinking arcana-ai gets OpenAI's usage

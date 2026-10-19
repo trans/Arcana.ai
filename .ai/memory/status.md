@@ -137,9 +137,19 @@ tag (see [release.md](release.md)).
       rates; the user questioned "depends on the plan", the price page
       settled it, and 0.5.5 replaced it (0.5.4's release notes say so).
       Also since 0.5.4: stored usage JSON missing a count loads it as zero.
-      Told @mj and @overlore. **Waiting on @mj:** whether ElevenLabs'
-      usage page counts that call at 12 (the header) or 30 (the text); the
-      price assumes the header. Sound effects stay unpriced: the docs say
+      Told @mj and @overlore. **@mj moved** (2026-10-19, working tree
+      only, `~> 0.5.5`, not committed: Thomas wants to talk it over with
+      Arcana first, wanting arcana-ai to work out the dollars;
+      `mail/received/20261019-192754Z-@mj--re-arcana-ai-0.5.5-mj-has-moved-and-your-12-or-30-7588ca68.md`).
+      The `post_api` override is gone; mj:voice reports
+      `usage.characters` and `cost` for speech and Eleven Music, but kept
+      its own OpenAI speech rates, thinking arcana-ai gets OpenAI's usage
+      only when streaming. It doesn't: `synthesize` asks for the event
+      stream too (all but tts-1/-hd), so `cost` prices gpt-4o-mini-tts.
+      **Still open: 12 (the header) or 30 (the text)?** mj's key lacks
+      `speech_history_read`, so it needs a look at the ElevenLabs account's
+      usage page, or a key with that permission; mj passed it to the
+      user. The price assumes the header. Sound effects stay unpriced: the docs say
       both $0.12 a minute and "billed per generation". Eleven Music
       (mj:voice calls it directly; arcana-ai has no music provider) has
       sent no cost header so far.

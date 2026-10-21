@@ -3,7 +3,9 @@
 *Updated 2026-10-21*
 
 Released 2026-10-21: arcana-ai 0.6.1 (`652547f`, speech fixes; see
-below). Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
+below); arcana 0.36.1 (`b0494a7`, built on arcana-ai 0.6.1) and 0.36.2
+(`a03a771`, the bridge refuses unknown tool arguments and empty mail;
+see below), **not yet installed**. Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
 (`84e52e3`), arcana-ai 0.6.0 (`f6fa467`). Installed: arcana 0.36.0 (the
 user installed it 2026-10-17; the daemon restarted on it 19:33 local).
 Sessions started before an install keep the old MCP bridge until they
@@ -172,14 +174,27 @@ tag (see [release.md](release.md)).
       are priced ($15 / $30 per million characters, checked 2026-10-21):
       `usage.characters` is the input sent, the stripped text plus the
       two newlines arcana-ai adds. Rates table `arcana-ai 2026-10-21`.
-      Told @mj (`46ac5b86`); mj was on `~> 0.5.5` and decides when to move.
-      **Open:** ElevenLabs' docs don't say whether a partial
-      `voice_settings` (speed only) keeps the voice's stored values for
-      the rest or takes the defaults; asked @mj to check one call's
-      history item. **Open:** whether OpenAI counts the two added
-      newlines. The arcana daemon still locks 0.6.0, so its openai `tts`
-      tool keeps the 60 s timeout until arcana's next release (the user
-      means to retire that tool anyway).
+      Told @mj (`46ac5b86`). **@mj moved to `~> 0.6.1`** (2026-10-21, a
+      drop-in; mj:voice waits 110 s, mj's own tts-1 rates gone; speed 1.2
+      on eleven_multilingual_v2: 3.88 s vs 5.64 s;
+      `mail/received/20261021-172920Z-@mj--re-arcana-ai-0.6.1-mj-is-on-it-and-what-the-histor-a00bc5b3.md`).
+      **Open, harmless for now:** whether a speed-only `voice_settings`
+      keeps a voice's stored values for the rest or takes the defaults.
+      ElevenLabs' history shows each call's settings, but every voice mj
+      uses stores the defaults, so it can't tell; it matters only for a
+      voice with non-default stored settings. **Open:** whether OpenAI
+      counts the two added newlines (needs an admin key's usage API).
+      arcana 0.36.1 moved the daemon to 0.6.1 (its `tts` tool had the
+      60 s timeout: the 0.36.0 package builds from the tag's lock).
+    - **Released in arcana 0.36.2 (`a03a771`, 2026-10-21): the MCP
+      bridge refuses an argument a tool's schema doesn't name**, saying
+      which it takes (and, for deliver and publish, that the message goes
+      in `payload` and the subject in `subject`), and sends nothing;
+      `arcana_deliver` refuses mail to an agent with neither subject nor
+      payload. Found by the user: @cyclops passed its message as
+      `message` (2026-10-21 19:48Z, to @overlore), which the bridge
+      dropped, sending an empty message with `ok: true`; cyclops noticed
+      and resent at 20:12Z.
     - **Released in arcana 0.35.1 (`45e08c7`, 2026-10-14):** the
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or

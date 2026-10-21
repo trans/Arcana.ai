@@ -5,7 +5,8 @@
 Released 2026-10-21: arcana-ai 0.6.1 (`652547f`, speech fixes; see
 below); arcana 0.36.1 (`b0494a7`, built on arcana-ai 0.6.1) and 0.36.2
 (`a03a771`, the bridge refuses unknown tool arguments and empty mail;
-see below), **not yet installed**. Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
+see below); the user installed 0.36.2 2026-10-21 (daemon restarted
+17:54 local). Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
 (`84e52e3`), arcana-ai 0.6.0 (`f6fa467`). Installed: arcana 0.36.0 (the
 user installed it 2026-10-17; the daemon restarted on it 19:33 local).
 Sessions started before an install keep the old MCP bridge until they

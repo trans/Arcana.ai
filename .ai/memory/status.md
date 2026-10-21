@@ -1,8 +1,9 @@
 # Status
 
-*Updated 2026-10-17*
+*Updated 2026-10-21*
 
-Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
+Released 2026-10-21: arcana-ai 0.6.1 (`652547f`, speech fixes; see
+below). Released 2026-10-17: arcana 0.36.0 (`v0.36.0`), arcana-core 0.20.0
 (`84e52e3`), arcana-ai 0.6.0 (`f6fa467`). Installed: arcana 0.36.0 (the
 user installed it 2026-10-17; the daemon restarted on it 19:33 local).
 Sessions started before an install keep the old MCP bridge until they
@@ -141,19 +142,44 @@ tag (see [release.md](release.md)).
       first in its working tree only: Thomas wanted to talk it over with
       Arcana first, wanting arcana-ai to work out the dollars;
       `mail/received/20261019-192754Z-@mj--re-arcana-ai-0.5.5-mj-has-moved-and-your-12-or-30-7588ca68.md`).
-      The user said go ahead; told @mj to commit (2026-10-19, `c1aa4f49`).
+      The user said go ahead; told @mj to commit (2026-10-19, `c1aa4f49`);
+      **committed in mj `5ef3f14`** (not pushed then).
       The `post_api` override is gone; mj:voice reports
       `usage.characters` and `cost` for speech and Eleven Music, but kept
       its own OpenAI speech rates, thinking arcana-ai gets OpenAI's usage
       only when streaming. It doesn't: `synthesize` asks for the event
       stream too (all but tts-1/-hd), so `cost` prices gpt-4o-mini-tts.
-      **Still open: 12 (the header) or 30 (the text)?** mj's key lacks
-      `speech_history_read`, so it needs a look at the ElevenLabs account's
-      usage page, or a key with that permission; mj passed it to the
-      user. The price assumes the header. Sound effects stay unpriced: the docs say
+      **Settled: the header's 12, not the text's 30** (2026-10-19): the user
+      gave mj's key history access, and the account's character counter
+      moved by 12 for each of three 30-character eleven_v3 lines
+      (`mail/received/20261019-194229Z-@mj--re-arcana-ai-0.5.5-the-account-counts-the-header-s-1869b9fb.md`).
+      Sound effects stay unpriced: the docs say
       both $0.12 a minute and "billed per generation". Eleven Music
       (mj:voice calls it directly; arcana-ai has no music provider) has
       sent no cost header so far.
+    - **Released in arcana-ai 0.6.1 (`652547f`, 2026-10-21): speech
+      fixes found by @mj**
+      (`mail/received/20261021-161230Z-@mj--speech-a-settable-read-timeout-and-speed-for-eleve-0bef539e.md`,
+      `mail/received/20261019-194513Z-@mj--re-0.5.5-committed-and-openai-speech-f4cc1fc2.md`).
+      TTS providers take `read_timeout` (constructor, property, registry
+      `"read_timeout"` in seconds), default 120 s instead of a fixed 60:
+      OpenAI sent gpt-4o-mini-tts's events only after the clip was done,
+      65-81 s for 4-5 s clips on 2026-10-21, so every call timed out
+      (Overlore's narration with it). ElevenLabs gets `speed` as
+      `voice_settings.speed` (0.7-1.2; eleven_v3 ignores it) and no other
+      voice settings: the stability 0.5 / similarity_boost 0.75 sent with
+      `instructions` since the extraction are gone. tts-1 and tts-1-hd
+      are priced ($15 / $30 per million characters, checked 2026-10-21):
+      `usage.characters` is the input sent, the stripped text plus the
+      two newlines arcana-ai adds. Rates table `arcana-ai 2026-10-21`.
+      Told @mj (`46ac5b86`); mj was on `~> 0.5.5` and decides when to move.
+      **Open:** ElevenLabs' docs don't say whether a partial
+      `voice_settings` (speed only) keeps the voice's stored values for
+      the rest or takes the defaults; asked @mj to check one call's
+      history item. **Open:** whether OpenAI counts the two added
+      newlines. The arcana daemon still locks 0.6.0, so its openai `tts`
+      tool keeps the 60 s timeout until arcana's next release (the user
+      means to retire that tool anyway).
     - **Released in arcana 0.35.1 (`45e08c7`, 2026-10-14):** the
       daemon on arcana-ai 0.5.3; its `tts` reply carries `usage` and
       `cost`, its `runware` image reply takes `cost` from `cost(at)` (or

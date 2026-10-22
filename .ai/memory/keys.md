@@ -1,8 +1,8 @@
 # Key pairs: proving who sends
 
 *Updated 2026-10-22. A design, not built. The user likes the idea
-(2026-10-22: "can't hurt local agents either") and settled end-to-end
-signatures; two open questions below are still theirs.*
+(2026-10-22: "can't hurt local agents either") and settled the open
+questions the same day.*
 
 ## Why
 
@@ -74,10 +74,13 @@ carelessly, and they're the footing a bus spanning machines needs.
   the bus. It keeps a network of Arcanas possible, where messages pass
   through buses the receiver doesn't run (see roadmap.md, Topology).
 
-## Open questions (the user's)
+- **One key per project** (the user, 2026-10-22): it holds all the
+  project's addresses.
+- **Owner tokens retire** once every client signs (the user,
+  2026-10-22). Until then, showing an address's owner token once moves it
+  to a key.
 
-- One key per project (proposed), or one per address?
-- Retire owner tokens once every client signs (proposed)?
+Building started 2026-10-22, arcana-core first.
 
 ## Order of work
 

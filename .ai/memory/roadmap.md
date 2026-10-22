@@ -25,7 +25,9 @@ Planned or parked work beyond [status.md](status.md) and
   are transport-level: multipart responses, a WebSocket binary frame, or
   binary references.
 - **Mailbox privacy.** Mail is readable by any local client today; see
-  [registration.md](registration.md).
+  [registration.md](registration.md). The key-pair design in
+  [keys.md](keys.md) would close it, with sending and joining as another
+  address.
 - **Chain-of-thought** shipped (arcana-ai 0.2.0, arcana 0.31.0); a separate
   `anthropic:research` service for web search waits for a second consumer.
 - **Transcript encryption to recipients** (an idea the user had

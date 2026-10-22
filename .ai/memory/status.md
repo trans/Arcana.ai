@@ -1,7 +1,10 @@
 # Status
 
-*Updated 2026-10-21*
+*Updated 2026-10-22*
 
+Released 2026-10-22: arcana 0.36.3 (`v0.36.3`): the bus refuses web
+pages, a foreign `Origin` or a `Host` not this machine's (`LocalGuard`);
+not yet installed. Senders still aren't proven: see [keys.md](keys.md).
 Released 2026-10-21: arcana-ai 0.6.1 (`652547f`, speech fixes; see
 below); arcana 0.36.1 (`b0494a7`, built on arcana-ai 0.6.1) and 0.36.2
 (`a03a771`, the bridge refuses unknown tool arguments and empty mail;

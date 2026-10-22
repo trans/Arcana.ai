@@ -1,8 +1,8 @@
 # Key pairs: proving who sends
 
 *Updated 2026-10-22. A design, not built. The user likes the idea
-(2026-10-22: "can't hurt local agents either"); the open questions below
-are still theirs to settle.*
+(2026-10-22: "can't hurt local agents either") and settled end-to-end
+signatures; two open questions below are still theirs.*
 
 ## Why
 
@@ -45,9 +45,9 @@ Each project gets an Ed25519 key pair; the bus holds only public keys.
   refuses a time more than 60 s off or a nonce seen within that window
   (replay).
 - **Receivers.** The bus stamps each message `verified` (it overwrites
-  whatever a client wrote). Messages can also carry the sender's
-  signature over from, to, id, time and the payload's hash, so a
-  receiver like mj can check the sender itself without trusting the bus.
+  whatever a client wrote). Messages also carry the sender's signature
+  over from, to, id, time and the payload's hash, so a receiver like mj
+  can check the sender itself without trusting the bus (decided).
 - **Joining and reading** as an address need its key too, which closes
   the other two holes.
 - **Enforcement.** First the `verified` stamp only, so nothing breaks;
@@ -67,11 +67,16 @@ separation needs agents running as separate users or sandboxed. Keys
 stop programs and agents from using the wrong address, by mistake or
 carelessly, and they're the footing a bus spanning machines needs.
 
+## Decided
+
+- **Signatures end to end** (the user, 2026-10-22): a message carries its
+  sender's signature to the receiver, which can check it without trusting
+  the bus. It keeps a network of Arcanas possible, where messages pass
+  through buses the receiver doesn't run (see roadmap.md, Topology).
+
 ## Open questions (the user's)
 
 - One key per project (proposed), or one per address?
-- Signatures end to end, so receivers can check them (proposed), or
-  checked by the bus only?
 - Retire owner tokens once every client signs (proposed)?
 
 ## Order of work

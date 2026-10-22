@@ -2,6 +2,9 @@
 
 *Updated 2026-10-22*
 
+Released 2026-10-22: arcana-core 0.21.0 and arcana 0.37.0 (`v0.37.0`):
+projects prove their addresses with an Ed25519 key; see
+[keys.md](keys.md). Not yet installed.
 Released 2026-10-22: arcana-core 0.20.1 and arcana 0.36.4 (`v0.36.4`):
 a WebSocket `join` can show an owner token (`Client.new(owner_token:)`),
 claiming its address; a wrong token is refused; a held address stays

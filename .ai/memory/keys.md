@@ -1,8 +1,9 @@
 # Key pairs: proving who sends
 
-*Updated 2026-10-22. A design, not built. The user likes the idea
-(2026-10-22: "can't hurt local agents either") and settled the open
-questions the same day.*
+*Updated 2026-10-22. Built and released 2026-10-22: arcana-core 0.21.0,
+arcana 0.37.0 (not yet installed). The user liked the idea ("can't hurt
+local agents either") and settled the open questions the same day. Wire
+details: `arcana/doc/PROTOCOL.md`, "Proving who sends".*
 
 ## Why
 
@@ -80,11 +81,35 @@ carelessly, and they're the footing a bus spanning machines needs.
   2026-10-22). Until then, showing an address's owner token once moves it
   to a key.
 
-Building started 2026-10-22, arcana-core first.
+## As built (2026-10-22)
+
+- arcana-core 0.21.0: `Key` (libcrypto Ed25519, PKCS#8 PEM, 0600, never
+  overwritten), `Canonical` (RFC 8785, checked against the RFC's
+  vectors), `Signing` (join, request and envelope proofs; `Nonces`),
+  `Envelope#signature`/`#verified`/`#signed`/`#signer`, `Directory#claim(key:)`
+  with `Claim::Moved`, `Client.new(key:)`. openssl's CLI reads our keys
+  and checks our signatures, and the other way round.
+- arcana 0.37.0: the bus sends a challenge to a join offering a key;
+  checks signed REST requests (401 when wrong or replayed); stamps
+  `verified`; keeps keys in the snapshot and listings. The session-start
+  hook makes `.ai/arcana.key` (excluded from git in the repository the
+  file is in, which matters where `.ai` is a link) and moves the handle
+  to it; the hook and the bridge sign every request; the bridge signs the
+  envelopes it sends. The bridge never makes a key itself.
+- What a signature covers: from, to, subject, payload, correlation id,
+  time (whole Unix seconds), id, re. Not `reply_to` (the bus sets it on
+  a sync request) or `ordering`.
+- Not enforced yet: `join.unproven` and `read.unproven` events, and
+  `verified` on each `message.sent` event, show who still goes without
+  proof. Next: `ARCANA_VERIFY_SENDERS=1` once they show nobody.
+- A lost key can't be replaced by a new one through the token alone:
+  unregister with the token, then register with the new key.
+- Known clients without keys: Cattacula's game joins `@cattacula`
+  (the handle its Claude session holds) without proof; Overlore's REST
+  calls; mj's services; memo-arcana.
 
 ## Order of work
 
-arcana-core (keys, signing, `Client` signs its join), then arcana (the
-server's checks, the bridge and hook make and use keys), then clients:
-mj's services, Overlore's REST calls, and the others listed in
-`coordination.md`.
+Done: arcana-core, then arcana. Next: clients (mj's services, memo,
+Overlore's REST calls, and the others listed in `coordination.md`),
+then enforcement.

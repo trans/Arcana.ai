@@ -22,7 +22,7 @@ working on the code needs belongs in the project's own docs, not here.
 | [registration.md](registration.md) | Handles, owner tokens, presence and the session hooks (0.32.0) |
 | [release.md](release.md) | How releases are cut, in which order, and the packaging-from-the-tag gotcha |
 | [topics.md](topics.md) | Shared-log topics: built (arcana-core 0.19.0, arcana 0.35.2), and what is still deferred |
-| [keys.md](keys.md) | Key pairs to prove who sends: the design (not built), what it doesn't do, open questions |
+| [keys.md](keys.md) | Key pairs to prove who sends: built in arcana-core 0.21.0 and arcana 0.37.0; what it does and doesn't, what is next |
 | [roadmap.md](roadmap.md) | Later work: SaaS auth stage 3, durability, audio transport, mailbox privacy |
 
 Keep each note short and dated (`*Updated YYYY-MM-DD*`), with absolute

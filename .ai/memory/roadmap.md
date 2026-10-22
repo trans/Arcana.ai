@@ -1,6 +1,6 @@
 # Later
 
-*Updated 2026-10-17*
+*Updated 2026-10-22*
 
 Planned or parked work beyond [status.md](status.md) and
 [topics.md](topics.md). None of it is scheduled.
@@ -13,6 +13,17 @@ Planned or parked work beyond [status.md](status.md) and
   then whether `TTS::OpenAI` and the daemon's `openai` `tts` tool move to
   it or stop. Only Onboard asked; mj and soaip won't use it. See
   [status.md](status.md).
+- **Topology** (the user, 2026-10-22, thinking aloud, not decided):
+  Arcana should be secure because it will run on a box of its own instead
+  of one on every machine, or perhaps as a network of Arcanas, which the
+  user finds more interesting than one central server. Either way, the
+  bus can't count on its clients being programs on its own machine, which
+  is all `LocalGuard` (0.36.3) checks. So signed senders
+  ([keys.md](keys.md)) become required, and connections need TLS. A
+  network also needs addresses that can name their node, and relays that
+  store and forward. Its messages pass through buses the receiver doesn't
+  run, so signatures need to reach the receiver (keys.md's second open
+  question).
 - **SaaS auth stage 3, per-org isolation.** Stages 1 (identities, orgs, API
   keys in Postgres, `arcana-admin`) and 2 (bearer tokens enforced with
   `ARCANA_AUTH_REQUIRED=1`) shipped in 0.18 and 0.19. Stage 3 splits into

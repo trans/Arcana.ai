@@ -8,11 +8,15 @@ are still theirs to settle.*
 
 The bus takes `from` as written. Over REST it checks only that the
 address has a mailbox, and an empty `from` skips even that. Over
-WebSocket it checks nothing, and `join` asks for no proof. So a program
-on the machine can send, join or read as any address. @mj raised it
+WebSocket it checks nothing, and `join` asks for no proof, not even an
+address's owner token: a join to an address already listed attaches to
+its mailbox, and when that connection closes the bus unregisters the
+address (dropping its owner token) and its mailbox. So a program on the
+machine can send, join or read as any address. @mj raised it
 (2026-10-22, `mail/received/20261022-034813Z-@mj--senders-aren-t-checked-anything-on-the-bus-can-sen-fda0f7b2.md`):
 mj:voice and mj:camera spend money on every call and must serve only
-callers they trust. Web pages, the outside way in, are refused since
+callers they trust. @memo asked the same (2026-10-22): memo:rag serves
+several namespaces and wants each to accept only certain senders. Web pages, the outside way in, are refused since
 0.36.3 (`LocalGuard`). The bus listens on 127.0.0.1 only, so what's
 left needs a program already running on the machine.
 

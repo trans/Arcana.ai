@@ -2,6 +2,12 @@
 
 *Updated 2026-10-22*
 
+Released 2026-10-22: arcana-core 0.20.1 and arcana 0.36.4 (`v0.36.4`):
+a WebSocket `join` can show an owner token (`Client.new(owner_token:)`),
+claiming its address; a wrong token is refused; a held address stays
+listed, mailbox and all, after a disconnect. A tokenless join of a held
+address still goes through, logged `join.unproven` (Cattacula's game
+joins `@cattacula` so). Not yet installed.
 Released 2026-10-22: arcana 0.36.3 (`v0.36.3`): the bus refuses web
 pages, a foreign `Origin` or a `Host` not this machine's (`LocalGuard`);
 the user installed it 2026-10-22, and the live bus gives 403 to a

@@ -1,12 +1,23 @@
 # Who supplies services
 
-*Updated 2026-10-08*
+*Updated 2026-10-22*
 
 - **Direction (the user, 2026-10-06):** arcana supplies the bus; project
   owners write their own services and register them. The daemon shouldn't
   keep growing provider integrations, which age at the speed of whoever
   last cared about them (arcana-ai's Runware identity requests were
   silently ignored by Runware for months).
+- **Direction (the user, 2026-10-22):** everything goes through the bus,
+  not a library: that decouples hard dependencies and lets projects be
+  written in any language. Today Overlore links arcana-ai for OpenAI chat
+  with tools, mj-arcana for speech, memo for embeddings, so each holds its
+  own API keys and needs its own release to pick up a fix (arcana-ai 0.6.1
+  took three). The aim: apps link at most a bus client, and arcana-ai
+  lives only inside the services that wrap a provider. What the bus lacks
+  first: proof of who calls ([keys.md](keys.md)), since one service then
+  spends for every caller; chat on the bus that takes tools, tool calls
+  and images (`openai`'s `chat` takes only role and text); streaming;
+  and a written wire protocol for clients in other languages.
 - `mj:camera` and `mj:voice` supersede the daemon's `runware` toolset and
   the `tts` tool on `openai`. `openai`'s `chat` and `embed` have no
   replacement and stay. **Open (the user is deciding):** whether and when

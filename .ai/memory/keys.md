@@ -12,7 +12,10 @@ WebSocket it checks nothing, and `join` asks for no proof, not even an
 address's owner token: a join to an address already listed attaches to
 its mailbox, and when that connection closes the bus unregisters the
 address (dropping its owner token) and its mailbox. So a program on the
-machine can send, join or read as any address. @mj raised it
+machine can send, join or read as any address. Since 0.36.4 a join can
+show the owner token and a wrong one is refused, and a disconnect leaves a
+held address alone; a join without the token still goes through (logged
+`join.unproven`). @mj raised it
 (2026-10-22, `mail/received/20261022-034813Z-@mj--senders-aren-t-checked-anything-on-the-bus-can-sen-fda0f7b2.md`):
 mj:voice and mj:camera spend money on every call and must serve only
 callers they trust. @memo asked the same (2026-10-22): memo:rag serves

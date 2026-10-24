@@ -76,7 +76,17 @@ carelessly, and they're the footing a bus spanning machines needs.
   through buses the receiver doesn't run (see roadmap.md, Topology).
 
 - **One key per project** (the user, 2026-10-22): it holds all the
-  project's addresses.
+  project's addresses that its sessions use.
+- **A service has a key of its own** (the user, 2026-10-24, asked by
+  @mj): a process that runs apart from the project's `.ai/`, sandboxed
+  on the workstation or deployed on a server, makes a key on first start
+  where it keeps its state, and that key holds only its own addresses.
+  A compromised service then can't sign as the project's agent, nothing
+  is bound in from `.ai/`, and no key is copied to a server. The cost:
+  a project has several keys, so tying them together across buses would
+  need the project key to sign its services' keys (not built).
+  `ARCANA_KEY_FILE` names the file; `Arcana::Key.from_env` (arcana-core
+  0.21.1) makes it there.
 - **Owner tokens retire** once every client signs (the user,
   2026-10-22). Until then, showing an address's owner token once moves it
   to a key.
@@ -103,7 +113,10 @@ carelessly, and they're the footing a bus spanning machines needs.
   `verified` on each `message.sent` event, show who still goes without
   proof. Next: `ARCANA_VERIFY_SENDERS=1` once they show nobody.
 - A lost key can't be replaced by a new one through the token alone:
-  unregister with the token, then register with the new key.
+  unregister with the token, then register with the new key. An address
+  held by a key alone (a service's) has no way back at all yet: someone
+  stops the bus and removes the listing from its snapshot. To build: an
+  operator's release, perhaps in the arcana-ctrl service.
 - Known clients without keys: Cattacula's game joins `@cattacula`
   (the handle its Claude session holds) without proof; Overlore's REST
   calls; mj's services; memo-arcana.

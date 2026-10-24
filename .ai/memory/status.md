@@ -2,6 +2,8 @@
 
 *Updated 2026-10-22*
 
+Released 2026-10-24: arcana-core 0.21.1 (`v0.21.1`): `Key.from_env`
+reads `ARCANA_KEY_FILE`, for a service's own key ([keys.md](keys.md)).
 Released 2026-10-24: arcana 0.37.1 (`v0.37.1`): the session-start hook
 keeps `arcana.key` and `arcana.token` out of git where `.ai` is a
 checkout of its own (an `ai` worktree, or a clone); 0.37.0's exclude

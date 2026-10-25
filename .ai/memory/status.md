@@ -1,6 +1,6 @@
 # Status
 
-*Updated 2026-10-22*
+*Updated 2026-10-25*
 
 Released 2026-10-24: arcana-core 0.21.2 (`v0.21.2`): `Key` builds beside
 other shards' libcrypto bindings. Crystal allows one signature per C
@@ -292,7 +292,34 @@ tag (see [release.md](release.md)).
   topic notices and service replies. Both paths now write `Via: arcana`.
   A session whose bridge predates 0.35.4 still writes the file itself
   before acting on a received message.
-- **dot-ai-mail and Arcana: layers, no switch** (the user decided,
+- **Decided (the user, 2026-10-25): one carrier per machine** (dot.ai
+  `10ce3e1`, `e87bd06`, `7918fcc`, merged into main, not pushed). It
+  replaces "layers, no switch" below. The carrier is whatever moves mail
+  between projects' folders, chosen in git config's `ai.carrier`: `local`
+  (dot-ai-mail, the default, so this machine sets nothing) or `arcana`
+  (for mail beyond one machine, or kept in a database). Agents touch only
+  their own folders and send everything through the outbox.
+  - **A carrier that isn't the machine's stays out of mail entirely.** On
+    a `local` machine Arcana's hooks don't tell of mail, it writes no mail
+    files, and `arcana_deliver` to a project or `arcana_publish` to a
+    topic refuses, pointing to the outbox. Services still go through
+    Arcana: a call to a service isn't mail. (Arcana first proposed writing
+    those into the sender's outbox; the user found two writers confusing.)
+  - **Changing carriers:** the old one writes what it still holds as
+    inbox files, and hands its topics over with their posts' numbers.
+  - **Topics are logs the carrier keeps.** `dot-ai-mail topic #name
+    "description"` makes one, a post is an outbox file to `#name`,
+    `dot-ai-mail read` reads, `mail.follow` follows. The local carrier
+    keeps them in `.ai/topics/` of the first `ai.path` directory.
+  - **Every agent on the bus lives on this machine.** @march was a
+    fallback handle, from before its parent folder had `.ai/`; @ipck is
+    @tom's old name.
+  - **Next:** dot-ai-mail 0.3 and the skill; then arcana 0.38 (the
+    refusals, the drain, the hooks' mail notices dropped). Tell @tom
+    (T.O.M.'s dotai plugin follows the spec) and @datadungeon (the
+    #datadungeon bus topic's 13 posts move with their numbers).
+- **Superseded 2026-10-25 (one carrier per machine, above):**
+  **dot-ai-mail and Arcana: layers, no switch** (the user decided,
   2026-10-15). dot-ai-mail always does local mail, with or without
   Arcana; Arcana does what's above it: other machines, cloud agents,
   live sessions, services. No setting chooses between them. dot-ai is

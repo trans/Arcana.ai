@@ -314,10 +314,18 @@ tag (see [release.md](release.md)).
   - **Every agent on the bus lives on this machine.** @march was a
     fallback handle, from before its parent folder had `.ai/`; @ipck is
     @tom's old name.
-  - **Next:** dot-ai-mail 0.3 and the skill; then arcana 0.38 (the
-    refusals, the drain, the hooks' mail notices dropped). Tell @tom
-    (T.O.M.'s dotai plugin follows the spec) and @datadungeon (the
-    #datadungeon bus topic's 13 posts move with their numbers).
+  - **Built 2026-10-27: dot-ai-mail 0.3.0, plugin 0.4.0** (dot.ai
+    `96f435c`, not pushed, so not released): topics (`topic`, posting from
+    the outbox, `read`, `mail.follow` notices) and `ai.carrier`; the skill
+    sends everything through the outbox. The spec's way of numbering posts
+    couldn't work (two posts with one number have different names), so
+    it's a `.posting` lock now. Told @tom (`mail/sent/`, the first mail
+    Arcana sent through the outbox).
+  - **Next:** release plugin 0.4.0 (the user's word); then arcana 0.38
+    (the refusals, the drain, the hooks' mail notices dropped), and
+    @datadungeon (the #datadungeon bus topic's 13 posts move with their
+    numbers). Mail between machines over git is an idea only
+    (dot.ai `notes/git-carrier.md`).
 - **Superseded 2026-10-25 (one carrier per machine, above):**
   **dot-ai-mail and Arcana: layers, no switch** (the user decided,
   2026-10-15). dot-ai-mail always does local mail, with or without

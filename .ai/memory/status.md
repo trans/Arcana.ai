@@ -45,6 +45,18 @@ tag (see [release.md](release.md)).
 
 ## Open
 
+- **Asked 2026-10-27 (by @mj, passing on the user's request): say in
+  `arcana_deliver`'s reply when an agent recipient is offline** (from the
+  directory's `online` and `last_seen`), and a way to ask whether a sent
+  message has been taken yet
+  (`mail/received/20261027-084742Z-@mj--request-say-in-the-deliver-reply-when-an-agent-rec-d2f45b67.md`).
+  @mj's three messages to @overlore went over the bus after the carrier
+  decision, because plugin 0.4.0 isn't out. Under the carrier model, agent
+  mail on this machine goes by file, so a delivered message is in the
+  recipient's inbox at once, and it has been read once it moves to
+  `received/`. Arcana's proposal: a dot-ai-mail command listing sent
+  messages with where each is now, and nothing in `arcana_deliver`, which
+  0.38 refuses for agents here. Waiting on the user; @mj not answered yet.
 - **Fixed in `6eb9fb7` (0.32.1):** arcana now uses arcana-ai `~> 0.4.0`, so the
   bus chat services retry by default; `ChatAgent` no longer falls back to
   `"gpt-4o-mini"` for every provider; and a project that gets `.ai/` after

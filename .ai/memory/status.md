@@ -330,18 +330,25 @@ tag (see [release.md](release.md)).
   - **Every agent on the bus lives on this machine.** @march was a
     fallback handle, from before its parent folder had `.ai/`; @ipck is
     @tom's old name.
-  - **Built 2026-10-27: dot-ai-mail 0.3.0, plugin 0.4.0** (dot.ai
-    `96f435c`, then `c13836a` for read receipts; not pushed, so not
-    released): topics (`topic`, posting from the outbox, `read`,
+  - **Released 2026-10-27: dot-ai-mail 0.3.0, plugin 0.4.0** (dot.ai
+    `96f435c`, then `c13836a` for read receipts; pushed on the user's
+    word): topics (`topic`, posting from the outbox, `read`,
     `mail.follow` notices), `ai.carrier`, and receipts; the skill
     sends everything through the outbox. The spec's way of numbering posts
     couldn't work (two posts with one number have different names), so
     it's a `.posting` lock now. Told @tom (`mail/sent/`, the first mail
-    Arcana sent through the outbox).
-  - **Next:** release plugin 0.4.0 (the user's word); then arcana 0.38
-    (the refusals, the drain, the hooks' mail notices dropped), and
-    @datadungeon (the #datadungeon bus topic's 13 posts move with their
-    numbers). Mail between machines over git is an idea only
+    Arcana sent through the outbox). The user is updating the installed
+    plugin (0.3.1 in Claude Code and Codex).
+  - **Moved 2026-10-27: `#datadungeon`** (the only bus topic) is a file
+    topic in the topic home, its 13 posts with their numbers, ids (the
+    bus correlation id's first 8 hex digits, as `arcana_receive` names
+    files) and `Via: arcana`. Told @datadungeon to post through the
+    outbox and to tell its readers (the bus listed 2 subscribers, unnamed)
+    to add `mail.follow`. The bus topic is still registered; 0.38 refuses
+    publishing to it. Arcana.ai's `.gitignore` now lists `mail/following`
+    and `topics/`.
+  - **Next:** arcana 0.38 (the refusals, the drain, the hooks' mail
+    notices dropped). Mail between machines over git is an idea only
     (dot.ai `notes/git-carrier.md`).
 - **Superseded 2026-10-25 (one carrier per machine, above):**
   **dot-ai-mail and Arcana: layers, no switch** (the user decided,

@@ -45,18 +45,22 @@ tag (see [release.md](release.md)).
 
 ## Open
 
-- **Asked 2026-10-27 (by @mj, passing on the user's request): say in
-  `arcana_deliver`'s reply when an agent recipient is offline** (from the
-  directory's `online` and `last_seen`), and a way to ask whether a sent
-  message has been taken yet
+- **Done 2026-10-27, in dot-ai-mail rather than Arcana: read receipts.**
+  @mj passed on the user's request to say in `arcana_deliver`'s reply when
+  an agent recipient is offline, and to have a way to ask whether a sent
+  message has been taken
   (`mail/received/20261027-084742Z-@mj--request-say-in-the-deliver-reply-when-an-agent-rec-d2f45b67.md`).
-  @mj's three messages to @overlore went over the bus after the carrier
-  decision, because plugin 0.4.0 isn't out. Under the carrier model, agent
-  mail on this machine goes by file, so a delivered message is in the
-  recipient's inbox at once, and it has been read once it moves to
-  `received/`. Arcana's proposal: a dot-ai-mail command listing sent
-  messages with where each is now, and nothing in `arcana_deliver`, which
-  0.38 refuses for agents here. Waiting on the user; @mj not answered yet.
+  Under the carrier model, mail on this machine goes by file: a delivered
+  message is in the recipient's inbox at once, and it has been read once
+  it's in `received/`. So nothing changes in `arcana_deliver`, which 0.38
+  refuses for agents here. Arcana first proposed a `dot-ai-mail sent`
+  command; the user asked why it had to be a command, and agreed to
+  receipts instead: the outbox's `.receipts` remembers each delivered
+  message, and the hooks tell the sender `@x read <name>` (at the next
+  prompt, through a new `UserPromptSubmit` hook, or at session start, or
+  with a Stop that has something else to say; never a turn of their own).
+  Built in dot.ai `c13836a` (not pushed; part of plugin 0.4.0). Answered
+  @mj (`mail/sent/`).
 - **Fixed in `6eb9fb7` (0.32.1):** arcana now uses arcana-ai `~> 0.4.0`, so the
   bus chat services retry by default; `ChatAgent` no longer falls back to
   `"gpt-4o-mini"` for every provider; and a project that gets `.ai/` after
@@ -327,8 +331,9 @@ tag (see [release.md](release.md)).
     fallback handle, from before its parent folder had `.ai/`; @ipck is
     @tom's old name.
   - **Built 2026-10-27: dot-ai-mail 0.3.0, plugin 0.4.0** (dot.ai
-    `96f435c`, not pushed, so not released): topics (`topic`, posting from
-    the outbox, `read`, `mail.follow` notices) and `ai.carrier`; the skill
+    `96f435c`, then `c13836a` for read receipts; not pushed, so not
+    released): topics (`topic`, posting from the outbox, `read`,
+    `mail.follow` notices), `ai.carrier`, and receipts; the skill
     sends everything through the outbox. The spec's way of numbering posts
     couldn't work (two posts with one number have different names), so
     it's a `.posting` lock now. Told @tom (`mail/sent/`, the first mail

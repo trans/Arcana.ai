@@ -404,6 +404,18 @@ tag (see [release.md](release.md)).
     hooks and allow rules in `settings.json` (jq's `*` merge would have
     dropped the turn-tags Stop hook on a re-run). After installing: run
     `arcana setup` for the prompt hook. The machine stays `local`.
+  - **Measured 2026-10-29, the user worried agents spend more time on
+    mail:** across Claude Code transcripts, tool calls touching mail
+    (`.ai/mail`, dot-ai-mail, `arcana_*`) were 10%, 9%, 8% of all in the
+    weeks from 10-09, 10-16, 10-23: not growing. Per project last week:
+    cyclops 19%, mj 12%, overlore 8%, Arcana 42% (its work was mail).
+    But the busiest agents still sent agent mail with `arcana_deliver`
+    (overlore 88, mj 53, cyclops 38, loudly 14 in a week), so they ran
+    both systems: the bus's inbox/receive dance, then the inbox file.
+    0.38 on a `local` machine ends that (Stop drains bus mail into the
+    inbox; the bridge refuses project mail). Measure again a few days
+    after the install, by call date, not file date (cyclops's session
+    runs back to August).
   - **Planned for 0.38 (done above):** `ai.carrier` checked by the hooks and tools;
     outbox delivery in Crystal by the spec's steps and locks; topics as the
     same files on this machine; receipts; an `arcana mail` command

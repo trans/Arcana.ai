@@ -368,9 +368,33 @@ tag (see [release.md](release.md)).
     to add `mail.follow`. The bus topic is still registered; 0.38 refuses
     publishing to it. Arcana.ai's `.gitignore` now lists `mail/following`
     and `topics/`.
-  - **Next:** arcana 0.38 (the refusals, the drain, the hooks' mail
-    notices dropped). Mail between machines over git is an idea only
-    (dot.ai `notes/git-carrier.md`).
+  - **Decided (the user, 2026-10-29): arcana 0.38 makes Arcana a carrier
+    of the outbox, not only refusals.** The user was uneasy about Arcana
+    losing its part in mail. Arcana's answer: the outbox is the envelope
+    and the carrier the post, and Arcana is the post that goes further
+    (other machines, cloud agents, presence, keys, a daemon that acts
+    between turns), but only once it can read an outbox. The user asked
+    how the two then keep off each other's toes: one setting read at
+    every run, the same locks and steps (so even both at once can't
+    double anything), the same files (so a switch moves nothing), and one
+    test suite run against both. The user agreed; the spec came first.
+    Plugin 0.4.1 released 2026-10-29 (dot.ai `3aa6906`).
+  - **Spec 2026-10-29 (dot.ai `22d91d0`, not pushed): "The carrier's
+    files".** `outbox/.delivering` (now in the spec), `.receipts` and its
+    tab-separated line (a project field not starting with `/` is a remote
+    recipient's, left for its carrier), `mail/following` and the topic
+    folders are the same for every carrier; every carrier keeps a
+    machine's topics in the topic home; `ai.carrier` read at the start of
+    every run; changing carriers moves only what's held elsewhere.
+  - **Next, arcana 0.38:** `ai.carrier` checked by the hooks and tools;
+    outbox delivery in Crystal by the spec's steps and locks; topics as the
+    same files on this machine; receipts; an `arcana mail` command
+    (`deliver`, `topic`, `read`) with dot-ai-mail's output lines, run
+    against dot.ai's tests (which take the carrier as a setting); the
+    Stop hook re-registering when a session's project changes (the @wc
+    case, under Open); and the refusals, only on a `local` machine. The
+    machine stays `local` until it passes. Mail between machines over git
+    is an idea only (dot.ai `notes/git-carrier.md`).
 - **Superseded 2026-10-25 (one carrier per machine, above):**
   **dot-ai-mail and Arcana: layers, no switch** (the user decided,
   2026-10-15). dot-ai-mail always does local mail, with or without

@@ -404,6 +404,19 @@ tag (see [release.md](release.md)).
     hooks and allow rules in `settings.json` (jq's `*` merge would have
     dropped the turn-tags Stop hook on a re-run). After installing: run
     `arcana setup` for the prompt hook. The machine stays `local`.
+    Installed 2026-10-29 from the local build (the bus restarted on it;
+    still not released); `arcana setup` is the user's to run (the
+    classifier won't let an agent edit Claude Code's settings).
+  - **dot-ai plugin 0.4.2, pushed and installed 2026-10-29** (dot.ai
+    `fcdcba6`): the skill's mail rules are cut to what an agent does day to day
+    (Mail and Processing, 1757 words to 811), with the rest in
+    `references/mail.md`, read only when something goes wrong (the user's
+    "escape hatch"); `references/arcana.md` is rewritten for 0.38. It adds two
+    rules: one message rather than several in a row, and no replies just to
+    say a message arrived. Claude Code's copy of the plugin had stayed at 0.3.1
+    since 10-20 (Codex had 0.4.1), so the measurement below ran on the 0.3.1
+    skill in Claude Code. Now both have 0.4.2: after `plugin update`, check
+    the version in both.
   - **Measured 2026-10-29, the user worried agents spend more time on
     mail:** across Claude Code transcripts, tool calls touching mail
     (`.ai/mail`, dot-ai-mail, `arcana_*`) were 10%, 9%, 8% of all in the

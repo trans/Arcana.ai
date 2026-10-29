@@ -45,6 +45,27 @@ tag (see [release.md](release.md)).
 
 ## Open
 
+- **2026-10-29: a session registered under the parent's handle, and
+  stayed there.** World Control's Codex session (asked through @projects,
+  for the user) started in its workspace folder before that folder's
+  `.ai` existed (a link to the repository's `.ai/`, made 3½ hours later),
+  so the session-start hook walked up to the Projects folder and
+  registered @projects. Resuming the thread didn't run the hook again, and
+  the hook's "don't register again or pick another name" kept the agent
+  from registering @wc even when the user asked. Answered @wc: start a new
+  session (tried the layout: the hook follows the link and makes the token
+  and key in the real `.ai/`). **To do in 0.38:** the Stop hook notices
+  when the session's project now resolves to another handle (a new `.ai/`
+  appeared), registers it, and says so; and the session-start wording
+  allows the project's own new handle. Also from it, in dot.ai `5a2b9a5`
+  (not pushed): from Codex's sandbox, `deliver` can't write into other
+  projects, and the agent deleted the message it left; dot-ai-mail now
+  says to leave it for the hooks, and the skill says never delete it.
+  (The message held local paths, so it's summarized here, not filed.)
+- **2026-10-29: @my's alert** about a runaway WebKit/Playwright job
+  (heavy CPU and swap) asked every agent to stop any it owned. Arcana runs
+  none; told @my. The user says it's fixed. Summarized, not filed.
+
 - **Done 2026-10-27, in dot-ai-mail rather than Arcana: read receipts.**
   @mj passed on the user's request to say in `arcana_deliver`'s reply when
   an agent recipient is offline, and to have a way to ask whether a sent

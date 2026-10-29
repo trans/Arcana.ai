@@ -54,7 +54,7 @@ tag (see [release.md](release.md)).
   the hook's "don't register again or pick another name" kept the agent
   from registering @wc even when the user asked. Answered @wc: start a new
   session (tried the layout: the hook follows the link and makes the token
-  and key in the real `.ai/`). **To do in 0.38:** the Stop hook notices
+  and key in the real `.ai/`). **Done in 0.38.0 (built, not released):** the Stop hook notices
   when the session's project now resolves to another handle (a new `.ai/`
   appeared), registers it, and says so; and the session-start wording
   allows the project's own new handle. Also from it, in dot.ai `5a2b9a5`
@@ -386,7 +386,25 @@ tag (see [release.md](release.md)).
     folders are the same for every carrier; every carrier keeps a
     machine's topics in the topic home; `ai.carrier` read at the start of
     every run; changing carriers moves only what's held elsewhere.
-  - **Next, arcana 0.38:** `ai.carrier` checked by the hooks and tools;
+  - **Built 2026-10-29: arcana 0.38.0** (`ceb726c`, bump `3d76d25`; not
+    pushed or released: the release waits on the user's word). `arcana
+    mail deliver|check|topic|read|find` and the hooks carry mail by the
+    spec's files and locks; dot.ai's tests take the carrier as a setting
+    (dot.ai `537603d`, not pushed: `just test-arcana`) and pass 64/64
+    against both carriers. Outbox mail for an address no project here
+    has goes over the bus, signed, with no receipt (nothing on the bus
+    tells of reading yet). On a `local` machine the bridge refuses
+    `arcana_deliver` to a project here and `arcana_publish` to any
+    `#topic`; under `arcana`, only a post to a file topic. The prompt
+    and Stop hooks register the project's handle when a session's
+    project changes (the @wc case; once per change, kept in
+    `$XDG_RUNTIME_DIR/arcana-hook/<session>`), and the session-start
+    wording allows it. `arcana setup` adds the UserPromptSubmit hook
+    (Codex timeouts 10 for new entries) and no longer replaces other
+    hooks and allow rules in `settings.json` (jq's `*` merge would have
+    dropped the turn-tags Stop hook on a re-run). After installing: run
+    `arcana setup` for the prompt hook. The machine stays `local`.
+  - **Planned for 0.38 (done above):** `ai.carrier` checked by the hooks and tools;
     outbox delivery in Crystal by the spec's steps and locks; topics as the
     same files on this machine; receipts; an `arcana mail` command
     (`deliver`, `topic`, `read`) with dot-ai-mail's output lines, run

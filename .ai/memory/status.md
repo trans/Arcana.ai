@@ -71,7 +71,9 @@ tag (see [release.md](release.md)).
   isn't left under the wrong address; falls back for git before 2.42) and
   `dot-ai install` (a PATH wrapper that runs the newest plugin copy), in
   dot.ai `dc73bed`. Pushed 2026-10-30 as plugin 0.5.0; `dot-ai install`
-  run on this machine. The plugin update in Claude Code and Codex is the
+  run on this machine. 0.5.1 (`be28eec`) names each hook, since Codex's
+  `/hooks` listed them as "Unnamed hook"; Codex asks again after every
+  plugin update (it pins the plugin's contents), and `t` trusts them all. The plugin update in Claude Code and Codex is the
   user's.
   Later, maybe a python3 MCP server wrapping the same commands.
 - **2026-10-30: @cyclops: a long-idle bus lost its built-in providers.**

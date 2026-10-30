@@ -45,6 +45,22 @@ tag (see [release.md](release.md)).
 
 ## Open
 
+- **2026-10-30: @cyclops: a long-idle bus lost its built-in providers.**
+  A server's bus, still on 0.25.0 and up for months, had pruned the
+  listings and then the mailboxes of anthropic, openai and arcana, so a
+  new game's model requests each waited out its 45s timeout until a
+  restart re-advertised them. Two causes were still in current code.
+  `Directory.agent?`/`.service?` read addresses by the pre-0.30 scheme (no
+  colon = agent), so the sweep took bare-named services for agents (and
+  auto ordering sent to them async). The WebSocket `send` dropped a message
+  for a missing mailbox silently. Fixed in arcana-core 0.21.3 (`f637819`,
+  bump `5d545ce`) and arcana `4b40909` (in the 0.38.0 notes): services are
+  never pruned, auto ordering waits for any service, and an undeliverable
+  socket send comes back as an error reply under its correlation_id. Not
+  pushed: core first, then arcana's `shard.lock` moves to 0.21.3
+  before the 0.38.0 release. Answered @cyclops, with a stopgap
+  (`ARCANA_AGENT_TTL` long). (The message held server details, so it's
+  summarized here, not filed.)
 - **2026-10-29: a session registered under the parent's handle, and
   stayed there.** World Control's Codex session (asked through @projects,
   for the user) started in its workspace folder before that folder's

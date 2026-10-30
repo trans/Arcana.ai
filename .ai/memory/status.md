@@ -68,7 +68,14 @@ tag (see [release.md](release.md)).
   socket send comes back as an error reply under its correlation_id.
   Released in arcana 0.38.1 (2026-10-30; 0.38.0 was already out). Answered @cyclops, with a stopgap
   (`ARCANA_AGENT_TTL` long). (The message held server details, so it's
-  summarized here, not filed.)
+  summarized here, not filed.) Then the user had @cyclops upgrade that bus
+  to 0.38.1. Told @cyclops what changed since 0.25. Its clients keep
+  working unchanged: the raw join and send frames parse as before, and
+  tokenless joins are only logged. But chat replies lost the old token
+  fields, the default model moved (claude-sonnet-4 to claude-sonnet-5-5),
+  and a send that can't land now gets an error reply. `arcana setup` isn't
+  for a server, 0.25's `state.json` loads, and nothing new migrates.
+  Rollback means restoring the state dir copied before the upgrade.
 - **2026-10-29: a session registered under the parent's handle, and
   stayed there.** World Control's Codex session (asked through @projects,
   for the user) started in its workspace folder before that folder's

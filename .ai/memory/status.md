@@ -1,7 +1,14 @@
 # Status
 
-*Updated 2026-10-25*
+*Updated 2026-10-30*
 
+Released 2026-10-30: arcana-core 0.21.3 (`v0.21.3`) and arcana 0.38.1
+(`v0.38.1`): services with bare names are never pruned, auto ordering
+waits for any service, and a WebSocket send that can't land comes back
+as an error reply (@cyclops's report, under Open). Not yet installed.
+Released 2026-10-29: arcana 0.38.0 (`v0.38.0`): Arcana can carry a
+machine's mail (below, "Built 2026-10-29"). The user released it and
+installed its package that day.
 Released 2026-10-24: arcana-core 0.21.2 (`v0.21.2`): `Key` builds beside
 other shards' libcrypto bindings. Crystal allows one signature per C
 function in a program: the sign/verify inits match azb's (`pctx :
@@ -56,9 +63,8 @@ tag (see [release.md](release.md)).
   for a missing mailbox silently. Fixed in arcana-core 0.21.3 (`f637819`,
   bump `5d545ce`) and arcana `4b40909` (in the 0.38.0 notes): services are
   never pruned, auto ordering waits for any service, and an undeliverable
-  socket send comes back as an error reply under its correlation_id. Not
-  pushed: core first, then arcana's `shard.lock` moves to 0.21.3
-  before the 0.38.0 release. Answered @cyclops, with a stopgap
+  socket send comes back as an error reply under its correlation_id.
+  Released in arcana 0.38.1 (2026-10-30; 0.38.0 was already out). Answered @cyclops, with a stopgap
   (`ARCANA_AGENT_TTL` long). (The message held server details, so it's
   summarized here, not filed.)
 - **2026-10-29: a session registered under the parent's handle, and
@@ -70,7 +76,7 @@ tag (see [release.md](release.md)).
   the hook's "don't register again or pick another name" kept the agent
   from registering @wc even when the user asked. Answered @wc: start a new
   session (tried the layout: the hook follows the link and makes the token
-  and key in the real `.ai/`). **Done in 0.38.0 (built, not released):** the Stop hook notices
+  and key in the real `.ai/`). **Released in 0.38.0:** the Stop hook notices
   when the session's project now resolves to another handle (a new `.ai/`
   appeared), registers it, and says so; and the session-start wording
   allows the project's own new handle. Also from it, in dot.ai `5a2b9a5`
@@ -402,8 +408,8 @@ tag (see [release.md](release.md)).
     folders are the same for every carrier; every carrier keeps a
     machine's topics in the topic home; `ai.carrier` read at the start of
     every run; changing carriers moves only what's held elsewhere.
-  - **Built 2026-10-29: arcana 0.38.0** (`ceb726c`, bump `3d76d25`; not
-    pushed or released: the release waits on the user's word). `arcana
+  - **Built 2026-10-29: arcana 0.38.0** (`ceb726c`, bump `3d76d25`; released
+    by the user the same day, `v0.38.0`). `arcana
     mail deliver|check|topic|read|find` and the hooks carry mail by the
     spec's files and locks; dot.ai's tests take the carrier as a setting
     (dot.ai `537603d`, not pushed: `just test-arcana`) and pass 64/64
@@ -420,8 +426,8 @@ tag (see [release.md](release.md)).
     hooks and allow rules in `settings.json` (jq's `*` merge would have
     dropped the turn-tags Stop hook on a re-run). After installing: run
     `arcana setup` for the prompt hook. The machine stays `local`.
-    Installed 2026-10-29 from the local build (the bus restarted on it;
-    still not released); `arcana setup` is the user's to run (the
+    Installed 2026-10-29 from the release's package (the bus restarted on
+    it); `arcana setup` is the user's to run (the
     classifier won't let an agent edit Claude Code's settings).
   - **dot-ai plugin 0.4.2, pushed and installed 2026-10-29** (dot.ai
     `fcdcba6`): the skill's mail rules are cut to what an agent does day to day

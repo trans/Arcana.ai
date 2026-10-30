@@ -70,7 +70,9 @@ tag (see [release.md](release.md)).
   one step, refusing a handle another project has, so the agent doing it
   isn't left under the wrong address; falls back for git before 2.42) and
   `dot-ai install` (a PATH wrapper that runs the newest plugin copy), in
-  dot.ai `dc73bed`. Both dot.ai commits wait for the user's word to push.
+  dot.ai `dc73bed`. Pushed 2026-10-30 as plugin 0.5.0; `dot-ai install`
+  run on this machine. The plugin update in Claude Code and Codex is the
+  user's.
   Later, maybe a python3 MCP server wrapping the same commands.
 - **2026-10-30: @cyclops: a long-idle bus lost its built-in providers.**
   A server's bus, still on 0.25.0 and up for months, had pruned the

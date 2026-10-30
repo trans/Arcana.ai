@@ -2,6 +2,12 @@
 
 *Updated 2026-10-30*
 
+Released 2026-10-30: arcana 0.38.2 (`v0.38.2`): where Arcana carries
+mail, its hooks name `dot-ai mail` when dot-ai is installed and Arcana's
+own commands when it isn't; without dot-ai the bridge carries mail
+between this machine's projects itself; a session that registered
+nothing at its start registers at the next prompt (under Open, "one mail
+interface"). Not yet installed.
 Released 2026-10-30: arcana-core 0.21.3 (`v0.21.3`) and arcana 0.38.1
 (`v0.38.1`): services with bare names are never pruned, auto ordering
 waits for any service, and a WebSocket send that can't land comes back
@@ -65,8 +71,8 @@ tag (see [release.md](release.md)).
   carrier's work to `arcana mail`, which partly supersedes the 2026-10-16
   decision "dot-ai-mail never calls Arcana" (marked in dot.ai's notes).
   For Arcana: its hook notices said `arcana mail read` and "(arcana mail
-  topic makes one)", and not how to file. Fixed in arcana `5a60d04` (not
-  released): they name dot-ai's commands where dot-ai is installed and
+  topic makes one)", and not how to file. Fixed in arcana `5a60d04`,
+  released as 0.38.2 (2026-10-30; not yet installed): they name dot-ai's commands where dot-ai is installed and
   Arcana's where it isn't (the user: Arcana mustn't depend on dot-ai);
   without dot-ai the bridge carries all mail; and a session that
   registered nothing at its start registers at the next prompt. Then `dot-ai init` (sets up `.ai/` in

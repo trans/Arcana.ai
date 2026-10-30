@@ -66,9 +66,12 @@ tag (see [release.md](release.md)).
   decision "dot-ai-mail never calls Arcana" (marked in dot.ai's notes).
   For Arcana: its hook notices still say `arcana mail read` and "(arcana
   mail topic makes one)", and don't say how to file. Point them at `dot-ai
-  mail` in the next arcana release. Still to build: `dot-ai init`, and
-  `dot-ai install` (a PATH wrapper). Later, maybe a python3 MCP server
-  wrapping the same commands.
+  mail` in the next arcana release. Then `dot-ai init` (sets up `.ai/` in
+  one step, refusing a handle another project has, so the agent doing it
+  isn't left under the wrong address; falls back for git before 2.42) and
+  `dot-ai install` (a PATH wrapper that runs the newest plugin copy), in
+  dot.ai `dc73bed`. Both dot.ai commits wait for the user's word to push.
+  Later, maybe a python3 MCP server wrapping the same commands.
 - **2026-10-30: @cyclops: a long-idle bus lost its built-in providers.**
   A server's bus, still on 0.25.0 and up for months, had pruned the
   listings and then the mailboxes of anthropic, openai and arcana, so a
@@ -91,6 +94,12 @@ tag (see [release.md](release.md)).
   and a send that can't land now gets an error reply. `arcana setup` isn't
   for a server, 0.25's `state.json` loads, and nothing new migrates.
   Rollback means restoring the state dir copied before the upgrade.
+  @cyclops upgraded it the same day and verified it: the providers came
+  back from the old snapshot, its clients reconnected, a live turn ran,
+  and no undeliverable or prune lines since. Its one note for us: the
+  build needs libpq even with auth off, because `db.cr` requires `pg`
+  unconditionally. Making Postgres a compile-time option would spare a
+  server that. (Its message held server details: summarized, not filed.)
 - **2026-10-29: a session registered under the parent's handle, and
   stayed there.** World Control's Codex session (asked through @projects,
   for the user) started in its workspace folder before that folder's

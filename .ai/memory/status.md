@@ -64,9 +64,12 @@ tag (see [release.md](release.md)).
   plus the carrier commands. Under `ai.carrier arcana` it hands the
   carrier's work to `arcana mail`, which partly supersedes the 2026-10-16
   decision "dot-ai-mail never calls Arcana" (marked in dot.ai's notes).
-  For Arcana: its hook notices still say `arcana mail read` and "(arcana
-  mail topic makes one)", and don't say how to file. Point them at `dot-ai
-  mail` in the next arcana release. Then `dot-ai init` (sets up `.ai/` in
+  For Arcana: its hook notices said `arcana mail read` and "(arcana mail
+  topic makes one)", and not how to file. Fixed in arcana `5a60d04` (not
+  released): they name dot-ai's commands where dot-ai is installed and
+  Arcana's where it isn't (the user: Arcana mustn't depend on dot-ai);
+  without dot-ai the bridge carries all mail; and a session that
+  registered nothing at its start registers at the next prompt. Then `dot-ai init` (sets up `.ai/` in
   one step, refusing a handle another project has, so the agent doing it
   isn't left under the wrong address; falls back for git before 2.42) and
   `dot-ai install` (a PATH wrapper that runs the newest plugin copy), in

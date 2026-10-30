@@ -57,8 +57,9 @@ tag (see [release.md](release.md)).
 - **2026-10-30: one mail interface, `dot-ai mail`** (dot.ai `7c0bd89`,
   plugin 0.5.0; not pushed). The user wanted one simple interface whatever
   the backend. dot-ai-mail is now `dot-ai`, with `mail send` (the message on
-  stdin; the name and the `Re:`/`Held:`/`By:` lines built from its
-  arguments), `release`, `done`, `rm` (the user's point: dropping a
+  stdin; the name and `Re:` built from its arguments), `draft` (`--why`,
+  `--by`; then `send NAME`: the user preferred that to `send --hold` and
+  `release`; a draft is a file the agent may edit), `done`, `rm` (the user's point: dropping a
   message with private details shouldn't take reading the internals),
   plus the carrier commands. Under `ai.carrier arcana` it hands the
   carrier's work to `arcana mail`, which partly supersedes the 2026-10-16

@@ -54,6 +54,20 @@ tag (see [release.md](release.md)).
 
 ## Open
 
+- **2026-10-30: one mail interface, `dot-ai mail`** (dot.ai `7c0bd89`,
+  plugin 0.5.0; not pushed). The user wanted one simple interface whatever
+  the backend. dot-ai-mail is now `dot-ai`, with `mail send` (the message on
+  stdin; the name and the `Re:`/`Held:`/`By:` lines built from its
+  arguments), `release`, `done`, `rm` (the user's point: dropping a
+  message with private details shouldn't take reading the internals),
+  plus the carrier commands. Under `ai.carrier arcana` it hands the
+  carrier's work to `arcana mail`, which partly supersedes the 2026-10-16
+  decision "dot-ai-mail never calls Arcana" (marked in dot.ai's notes).
+  For Arcana: its hook notices still say `arcana mail read` and "(arcana
+  mail topic makes one)", and don't say how to file. Point them at `dot-ai
+  mail` in the next arcana release. Still to build: `dot-ai init`, and
+  `dot-ai install` (a PATH wrapper). Later, maybe a python3 MCP server
+  wrapping the same commands.
 - **2026-10-30: @cyclops: a long-idle bus lost its built-in providers.**
   A server's bus, still on 0.25.0 and up for months, had pruned the
   listings and then the mailboxes of anthropic, openai and arcana, so a

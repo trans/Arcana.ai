@@ -5,7 +5,9 @@
 Released 2026-10-30: arcana-core 0.21.3 (`v0.21.3`) and arcana 0.38.1
 (`v0.38.1`): services with bare names are never pruned, auto ordering
 waits for any service, and a WebSocket send that can't land comes back
-as an error reply (@cyclops's report, under Open). Not yet installed.
+as an error reply (@cyclops's report, under Open). Installed 2026-10-30,
+with `arcana setup` run (the prompt hook is in Claude Code and Codex, and
+the turn-tags Stop hook survived it).
 Released 2026-10-29: arcana 0.38.0 (`v0.38.0`): Arcana can carry a
 machine's mail (below, "Built 2026-10-29"). The user released it and
 installed its package that day.
